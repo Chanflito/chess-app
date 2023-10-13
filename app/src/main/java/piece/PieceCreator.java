@@ -36,7 +36,7 @@ public class PieceCreator implements PieceBuilder {
     }
 
     @Override
-    public PieceCreator movement(List<MovementValidator> movements) {
+    public PieceBuilder movement(MoveHandler moveHandler) {
         return new PieceCreator(this.color,this.type, moveHandler,this.name);
     }
 

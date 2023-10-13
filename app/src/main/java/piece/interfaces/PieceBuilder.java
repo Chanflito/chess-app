@@ -10,7 +10,7 @@ import java.util.List;
 public interface PieceBuilder {
     PieceBuilder color(Color color);
     PieceBuilder type(TypePiece typePiece);
-    PieceBuilder movement(List<MovementValidator> movement);
+    PieceBuilder movement(MoveHandler moveHandler);
 
     PieceBuilder id(String id);
     Piece getResult();

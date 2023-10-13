@@ -20,9 +20,11 @@ public class UnidirectionalMovementValidator implements MovementValidator {
         Position initialPosition=movement.getFrom().copy();
         Position finalPosition=movement.getTo().copy();
         if (finalPosition.x() >= board.getRows() || finalPosition.y()>= board.getColumns()) return false;
-        int x= initialPosition.x();int y= initialPosition.y();
+        int x= initialPosition.x();
+        int y= initialPosition.y();
         while (x<=board.getRows() -1 && y<= board.getColumns() -1){
-            x+=rows;y+=columns;
+            x+=rows;
+            y+=columns;
             Position evaluate=new Position(x,y);
             if (evaluate.equals(finalPosition)) return true;
         }
