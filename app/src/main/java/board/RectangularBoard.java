@@ -3,9 +3,8 @@ package board;
 import board.interfaces.Board;
 import piece.Piece;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 public class RectangularBoard implements Board {
     private final int rows;
     private final int columns;
@@ -43,7 +42,24 @@ public class RectangularBoard implements Board {
 
     @Override
     public RectangularBoard copy(){
-        Map<Position, Piece> clonePieces = new HashMap<>(this.getPieces());
-        return new RectangularBoard(rows,columns,clonePieces,historyBoards);
+        return new RectangularBoard(rows,columns,copyMap(this.pieces),copyHistory());
+    }
+
+    private Map<Position,Piece> copyMap(Map<Position,Piece> map){
+        Map<Position, Piece> newPieces=new HashMap<>();
+        for (Map.Entry<Position,Piece> entry: map.entrySet()){
+            Position position=entry.getKey().copy();
+            Piece piece= entry.getValue().copy();
+            newPieces.put(position,piece);
+        }
+        return newPieces;
+    }
+
+    private List<Map<Position,Piece>> copyHistory(){
+        List<Map<Position, Piece>> newHistory=new ArrayList<>();
+        for (int i = 0; i < historyBoards.size()-1; i++) {
+            newHistory.add(copyMap(historyBoards.get(i)));
+        }
+        return newHistory;
     }
 }

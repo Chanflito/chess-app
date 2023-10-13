@@ -4,7 +4,7 @@ import enums.Color;
 import game.interfaces.TurnHandler;
 
 public class ClassicTurnHandler implements TurnHandler {
-    //NO ES PUROOOOOO
+
     private final Color currentTurn;
 
     public ClassicTurnHandler(Color turn) {

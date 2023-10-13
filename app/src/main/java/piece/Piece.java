@@ -28,7 +28,7 @@ public class Piece{
         return type;
     }
 
-    public MoveHandler getMoveBuilder() {
+    public MoveHandler getMoveHandler() {
         return moveHandler;
     }
 

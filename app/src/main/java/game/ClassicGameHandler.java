@@ -39,14 +39,20 @@ public class ClassicGameHandler implements GameHandler {
     public GameHandler tryMovement(Movement movement,Game game){
         Color playerColor=this.turnHandler.getCurrentTurn();
         for (Player p: game.getPlayers()) {
-            if (p.getColor().compareTo(playerColor)==0){
+            if (p.getColor().compareTo(playerColor)==0 && isPlayerColorEqualsPieceColor(movement, game, playerColor)){
                 GameHandler current= copy();
                 Game currentGame=game.copy();
                 Game gameResult= gameMover.movePiece(movement,currentGame);
+                return new ClassicGameHandler(gameResult,this.gameMover,current.getTurnHandler());
             }
         }
         return null;
     }
+
+    private static boolean isPlayerColorEqualsPieceColor(Movement movement, Game game, Color playerColor) {
+        return game.getBoard().getPieces().get(movement.getFrom()).getColor() == playerColor;
+    }
+
     @Override
     public GameHandler copy() {
         return new ClassicGameHandler(game.copy(),this.gameMover,turnHandler.nextTurn());
