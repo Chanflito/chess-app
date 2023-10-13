@@ -1,5 +1,6 @@
 package piece;
 
+import board.interfaces.Board;
 import piece.interfaces.MoveHandler;
 import validator.interfaces.MovementValidator;
 
@@ -25,12 +26,18 @@ public class ClassicMoveHandler implements MoveHandler {
     }
 
     @Override
-    public boolean checkOrValidators() {
+    public boolean checkOrValidators(Movement movement, Board board) {
+        for (MovementValidator m: orValidator) {
+            if (m.isValid(movement,board)) return true;
+        }
         return false;
     }
 
     @Override
-    public boolean checkAndValidators() {
-        return false;
+    public boolean checkAndValidators(Movement movement, Board board) {
+        for (MovementValidator m: andValidator) {
+            if (!m.isValid(movement,board)) return false;
+        }
+        return true;
     }
 }

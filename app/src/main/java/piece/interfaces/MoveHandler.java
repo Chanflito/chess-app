@@ -1,5 +1,7 @@
 package piece.interfaces;
 
+import board.interfaces.Board;
+import piece.Movement;
 import validator.interfaces.MovementValidator;
 
 import java.util.List;
@@ -10,8 +12,8 @@ public interface MoveHandler {
 
     List<MovementValidator> getAndValidators();
 
-    boolean checkOrValidators();
+    boolean checkOrValidators(Movement movement, Board board);
 
-    boolean checkAndValidators();
+    boolean checkAndValidators(Movement movement, Board board);
 
 }
