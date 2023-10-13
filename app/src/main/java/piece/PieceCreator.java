@@ -2,6 +2,7 @@ package piece;
 
 import enums.Color;
 import enums.TypePiece;
+import piece.interfaces.MoveHandler;
 import piece.interfaces.PieceBuilder;
 import validator.interfaces.MovementValidator;
 
@@ -11,40 +12,40 @@ public class PieceCreator implements PieceBuilder {
     private Color color;
     private TypePiece type;
 
-    private List<MovementValidator> movements;
+    private MoveHandler moveHandler;
 
     private String name;
     public PieceCreator() {
     }
 
-    private PieceCreator(Color color, TypePiece type, List<MovementValidator> movements,String name) {
+    private PieceCreator(Color color, TypePiece type, MoveHandler movements, String name) {
         this.color = color;
         this.type = type;
-        this.movements = movements;
+        this.moveHandler = movements;
         this.name=name;
     }
 
     @Override
-    public PieceCreator setColor(Color color) {
-        return new PieceCreator(color,this.type,this.movements,name);
+    public PieceCreator color(Color color) {
+        return new PieceCreator(color,this.type,this.moveHandler,name);
     }
 
     @Override
-    public PieceCreator setType(TypePiece typePiece) {
-        return new PieceCreator(this.color,typePiece,this.movements,this.name);
+    public PieceCreator type(TypePiece typePiece) {
+        return new PieceCreator(this.color,typePiece,this.moveHandler,this.name);
     }
 
     @Override
-    public PieceCreator setMovement(List<MovementValidator> movements) {
-        return new PieceCreator(this.color,this.type,movements,this.name);
+    public PieceCreator movement(List<MovementValidator> movements) {
+        return new PieceCreator(this.color,this.type, moveHandler,this.name);
     }
 
     @Override
-    public PieceCreator setName(String name) {
-        return new PieceCreator(this.color,this.type,this.movements,this.name);
+    public PieceCreator id(String name) {
+        return new PieceCreator(this.color,this.type,this.moveHandler,this.name);
     }
 
     public Piece getResult() {
-        return new Piece(this.color, this.type,this.movements,name);
+        return new Piece(this.color, this.type,this.moveHandler,name);
     }
 }

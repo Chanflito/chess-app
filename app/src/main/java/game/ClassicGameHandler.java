@@ -34,7 +34,8 @@ public class ClassicGameHandler implements GameHandler {
     public TurnHandler getTurnHandler() {
         return this.turnHandler;
     }
-    //TODO
+
+
     public GameHandler tryMovement(Movement movement,Game game){
         Color playerColor=this.turnHandler.getCurrentTurn();
         for (Player p: game.getPlayers()) {

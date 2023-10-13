@@ -2,23 +2,22 @@ package piece;
 
 import enums.Color;
 import enums.TypePiece;
-import validator.interfaces.MovementValidator;
+import piece.interfaces.MoveHandler;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Piece{
     private final Color color;
     private final TypePiece type;
 
-    private final List<MovementValidator> movements;
+    private final MoveHandler moveHandler;
 
     private final String id;
 
-    protected Piece(Color color, TypePiece type, List<MovementValidator> movements, String id) {
+    protected Piece(Color color, TypePiece type, MoveHandler moveHandler, String id) {
         this.color = color;
         this.type = type;
-        this.movements = movements;
+        this.moveHandler = moveHandler;
         this.id = id;
     }
 
@@ -29,16 +28,16 @@ public class Piece{
         return type;
     }
 
-    public List<MovementValidator> getMovements() {
-        return movements;
+    public MoveHandler getMoveBuilder() {
+        return moveHandler;
     }
 
-    public String id(){
+    public String getId(){
         return this.id;
     }
 
     public Piece copy(){
-        return new Piece(this.color,this.type,this.movements,this.id);
+        return new Piece(this.color,this.type,this.moveHandler,this.id);
     }
 
     @Override

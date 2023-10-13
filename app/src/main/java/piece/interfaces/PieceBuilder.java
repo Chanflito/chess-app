@@ -8,10 +8,10 @@ import validator.interfaces.MovementValidator;
 import java.util.List;
 
 public interface PieceBuilder {
-    PieceBuilder setColor(Color color);
-    PieceBuilder setType(TypePiece typePiece);
-    PieceBuilder setMovement(List<MovementValidator> movement);
+    PieceBuilder color(Color color);
+    PieceBuilder type(TypePiece typePiece);
+    PieceBuilder movement(List<MovementValidator> movement);
 
-    PieceBuilder setName(String name);
+    PieceBuilder id(String id);
     Piece getResult();
 }
