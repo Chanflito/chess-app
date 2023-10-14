@@ -35,7 +35,6 @@ public class ClassicGameHandler implements GameHandler {
         return this.turnHandler;
     }
 
-    //TODO: Fix this tomorrow, turnHandler is not changing.
     public GameHandler tryMovement(Movement movement,Game game){
         Color playerColor=turnHandler.getCurrentTurn();
         for (Player p: game.getPlayers()) {

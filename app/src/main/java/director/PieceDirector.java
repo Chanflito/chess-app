@@ -29,8 +29,8 @@ public class PieceDirector {
     }
 
 
-    Piece createRook(Color color){
-        return builder.color(color).type(PieceType.ROOK).id(Integer.toString(id++))
+    Piece createRook(Color color,MoveHandler moveHandler){
+        return builder.color(color).type(PieceType.ROOK).id(Integer.toString(id++)).movement(moveHandler)
                 .getResult();
     }
 
