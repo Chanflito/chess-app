@@ -23,9 +23,9 @@ public class PieceDirector {
     }
 
 
-     Piece createQueen(Color color){
+     Piece createQueen(Color color,MoveHandler moveHandler){
         return builder.color(color).type(PieceType.QUEEN).id(Integer.toString(id++))
-                .getResult();
+                .movement(moveHandler).getResult();
     }
 
 
@@ -34,14 +34,14 @@ public class PieceDirector {
                 .getResult();
     }
 
-    Piece createBishop(Color color){
+    Piece createBishop(Color color,MoveHandler moveHandler){
         return builder.color(color).id(Integer.toString(id++))
-                .type(PieceType.BISHOP).getResult();
+                .movement(moveHandler).type(PieceType.BISHOP).getResult();
     }
 
-    Piece createKnight(Color color){
+    Piece createKnight(Color color,MoveHandler moveHandler){
         return builder.color(color).id(Integer.toString(id++))
-                .type(PieceType.KNIGHT).getResult();
+                .movement(moveHandler).type(PieceType.KNIGHT).getResult();
     }
 
 }

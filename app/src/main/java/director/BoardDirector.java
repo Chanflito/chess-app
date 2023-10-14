@@ -21,11 +21,11 @@ public class BoardDirector {
         assignPawnsIntoBoard(columns,position, moveDirector, pieceDirector);
         assignRooksIntoBoard(position,pieceDirector,moveDirector);
 
-        assignKnightsIntoBoard(position,pieceDirector);
+        assignKnightsIntoBoard(position,pieceDirector,moveDirector);
 
-        assignBishopsIntoBoard(position,pieceDirector);
+        assignBishopsIntoBoard(position,pieceDirector,moveDirector);
 
-        assignQueensIntoBoard(position,pieceDirector);
+        assignQueensIntoBoard(position,pieceDirector,moveDirector);
 
         assignKingsIntoBoard(position,pieceDirector);
         history.add(position);
@@ -37,23 +37,23 @@ public class BoardDirector {
         position.put(new Position(4,7), director.createKing(Color.BLACK));
     }
 
-    private void assignQueensIntoBoard(Map<Position, Piece> position,PieceDirector director) {
-        position.put(new Position(3,0), director.createQueen(Color.WHITE));
-        position.put(new Position(3,7), director.createQueen(Color.BLACK));
+    private void assignQueensIntoBoard(Map<Position, Piece> position,PieceDirector director,MoveDirector moveDirector) {
+        position.put(new Position(3,0), director.createQueen(Color.WHITE, moveDirector.createQueenMovement()));
+        position.put(new Position(3,7), director.createQueen(Color.BLACK,moveDirector.createQueenMovement()));
     }
 
-    private  void assignBishopsIntoBoard(Map<Position, Piece> position,PieceDirector director) {
-        position.put(new Position(2,0), director.createBishop(Color.WHITE));
-        position.put(new Position(5,0), director.createBishop(Color.WHITE));
-        position.put(new Position(2,7), director.createBishop(Color.BLACK));
-        position.put(new Position(5,7), director.createBishop(Color.BLACK));
+    private void assignBishopsIntoBoard(Map<Position, Piece> position,PieceDirector director,MoveDirector moveDirector){
+        position.put(new Position(2,0), director.createBishop(Color.WHITE,moveDirector.createBishopMovement()));
+        position.put(new Position(5,0), director.createBishop(Color.WHITE,moveDirector.createBishopMovement()));
+        position.put(new Position(2,7), director.createBishop(Color.BLACK,moveDirector.createBishopMovement()));
+        position.put(new Position(5,7), director.createBishop(Color.BLACK,moveDirector.createBishopMovement()));
     }
 
-    private  void assignKnightsIntoBoard(Map<Position, Piece> position,PieceDirector director) {
-        position.put(new Position(1,0), director.createKnight(Color.WHITE));
-        position.put(new Position(6,0), director.createKnight(Color.WHITE));
-        position.put(new Position(1,7), director.createKnight(Color.BLACK));
-        position.put(new Position(6,7), director.createKnight(Color.BLACK));
+    private  void assignKnightsIntoBoard(Map<Position, Piece> position,PieceDirector director,MoveDirector moveDirector) {
+        position.put(new Position(1,0), director.createKnight(Color.WHITE, moveDirector.createKnightMovement()));
+        position.put(new Position(6,0), director.createKnight(Color.WHITE,moveDirector.createKnightMovement()));
+        position.put(new Position(1,7), director.createKnight(Color.BLACK,moveDirector.createKnightMovement()));
+        position.put(new Position(6,7), director.createKnight(Color.BLACK, moveDirector.createKnightMovement()));
     }
 
     private  void assignRooksIntoBoard(Map<Position, Piece> position,PieceDirector director,MoveDirector moveDirector) {
