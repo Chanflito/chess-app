@@ -22,6 +22,6 @@ public class CaptureValidator implements MovementValidator {
             Piece pieceToCapture=board.getPieces().get(movement.getTo()).copy();
             return pieceToCapture.getColor() != board.getPieces().get(movement.getFrom()).getColor();
         }
-        return false;
+        return true;
     }
 }

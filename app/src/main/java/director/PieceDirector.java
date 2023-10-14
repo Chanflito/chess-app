@@ -18,8 +18,8 @@ public class PieceDirector {
         return builder.color(color).type(PieceType.PAWN).movement(moveHandler).id(Integer.toString(id++)).getResult();
     }
 
-    Piece createKing(Color color){
-        return builder.color(color).type(PieceType.KING).id(Integer.toString(id++)).getResult();
+    Piece createKing(Color color,MoveHandler moveHandler){
+        return builder.color(color).type(PieceType.KING).movement(moveHandler).id(Integer.toString(id++)).getResult();
     }
 
 

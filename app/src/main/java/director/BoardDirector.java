@@ -27,14 +27,14 @@ public class BoardDirector {
 
         assignQueensIntoBoard(position,pieceDirector,moveDirector);
 
-        assignKingsIntoBoard(position,pieceDirector);
+        assignKingsIntoBoard(position,pieceDirector,moveDirector);
         history.add(position);
         return new RectangularBoard(columns,rows,position,history);
     }
 
-    private void assignKingsIntoBoard(Map<Position, Piece> position,PieceDirector director) {
-        position.put(new Position(4,0), director.createKing(Color.WHITE));
-        position.put(new Position(4,7), director.createKing(Color.BLACK));
+    private void assignKingsIntoBoard(Map<Position, Piece> position,PieceDirector director,MoveDirector moveDirector) {
+        position.put(new Position(4,0), director.createKing(Color.WHITE, moveDirector.createKingMovement()));
+        position.put(new Position(4,7), director.createKing(Color.BLACK,moveDirector.createKingMovement()));
     }
 
     private void assignQueensIntoBoard(Map<Position, Piece> position,PieceDirector director,MoveDirector moveDirector) {

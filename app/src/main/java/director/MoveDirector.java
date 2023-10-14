@@ -46,6 +46,12 @@ public class MoveDirector {
         return new ClassicMoveHandler(orValidator,andValidator);
     }
 
+    public MoveHandler createKingMovement(){
+        List<MovementValidator> orValidator=new ArrayList<>();
+        List<MovementValidator> andValidator=new ArrayList<>();
+        setKingValidator(orValidator,andValidator);
+        return new ClassicMoveHandler(orValidator,andValidator);
+    }
     private void setPawnsValidator(int direction,
                                           List<MovementValidator> orValidator, List<MovementValidator> andValidator) {
         orValidator.add(new CompositeAndValidator(
@@ -73,7 +79,8 @@ public class MoveDirector {
         orValidator.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(0,-1),new PathValidator(0,-1))
         ));
-        andValidator.add(new InBoardValidator());
+        addDefaultAndValidator(andValidator);
+
     }
 
     private void setBishopValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
@@ -117,7 +124,7 @@ public class MoveDirector {
         orValidator.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(0,-1),new PathValidator(0,-1))
         ));
-        andValidator.add(new InBoardValidator());
+        addDefaultAndValidator(andValidator);
     }
 
     private void setKnightValidator(List<MovementValidator> orValidator,List<MovementValidator> andValidator){
@@ -129,6 +136,39 @@ public class MoveDirector {
         orValidator.add(new ComposeMovementValidator(1,-2));
         orValidator.add(new ComposeMovementValidator(-1,2));
         orValidator.add(new ComposeMovementValidator(-1,-2));
+        addDefaultAndValidator(andValidator);
+    }
+
+    private void setKingValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(1,1),new IncrementValidator(1)))
+        );
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(-1,-1),new IncrementValidator(1))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(-1,1),new IncrementValidator(1))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(1,-1),new IncrementValidator(1))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(1,0),new IncrementValidator(1)))
+        );
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(-1,0),new IncrementValidator(1))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(0,1),new IncrementValidator(1))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(0,-1),new IncrementValidator(1))
+        ));
+        addDefaultAndValidator(andValidator);
+    }
+
+    private static void addDefaultAndValidator(List<MovementValidator> andValidator){
         andValidator.add(new InBoardValidator());
+        andValidator.add(new CaptureValidator(true));
     }
 }
