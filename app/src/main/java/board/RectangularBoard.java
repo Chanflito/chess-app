@@ -57,8 +57,8 @@ public class RectangularBoard implements Board {
 
     private List<Map<Position,Piece>> copyHistory(){
         List<Map<Position, Piece>> newHistory=new ArrayList<>();
-        for (int i = 0; i < historyBoards.size()-1; i++) {
-            newHistory.add(copyMap(historyBoards.get(i)));
+        for (Map<Position, Piece> historyBoard : historyBoards) {
+            newHistory.add(copyMap(historyBoard));
         }
         return newHistory;
     }

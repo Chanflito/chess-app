@@ -35,15 +35,14 @@ public class ClassicGameHandler implements GameHandler {
         return this.turnHandler;
     }
 
-    //TODO: Change this method and pass the player that have to move.
+    //TODO: Fix this tomorrow, turnHandler is not changing.
     public GameHandler tryMovement(Movement movement,Game game){
-        Color playerColor=this.turnHandler.getCurrentTurn();
+        Color playerColor=turnHandler.getCurrentTurn();
         for (Player p: game.getPlayers()) {
             if (p.getColor().compareTo(playerColor)==0 && isPlayerColorEqualsPieceColor(movement, game, playerColor)){
-                GameHandler current= copy();
                 Game currentGame=game.copy();
                 Game gameResult= gameMover.movePiece(movement,currentGame);
-                return new ClassicGameHandler(gameResult,this.gameMover,current.getTurnHandler());
+                return new ClassicGameHandler(gameResult,gameMover,turnHandler.nextTurn());
             }
         }
         return null;

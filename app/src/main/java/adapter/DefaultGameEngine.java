@@ -6,28 +6,29 @@ import enums.Color;
 import game.*;
 import game.interfaces.GameHandler;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+import java.util.Stack;
 
 public class DefaultGameEngine implements GameEngine {
 
-    private GameHandler gameHandler;
-    
+    private final GameHandler gameHandler;
+    private Stack<GameHandler> previousGameHandlers=new Stack<>();
     public DefaultGameEngine() {
         BoardDirector boardDirector = new BoardDirector();
         this.gameHandler= createClassicGame(boardDirector);
+        previousGameHandlers.push(gameHandler);
     }
 
-
-    //TODO: Add movement exceptions..
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-        GameHandler tryMovement=gameHandler.tryMovement(Adapter.convertMove(move),gameHandler.currentGame());
-        if (tryMovement!=null){
+            GameHandler tryMovement=previousGameHandlers.peek().tryMovement(Adapter.convertMove(move)
+                    ,previousGameHandlers.peek().currentGame());
+            previousGameHandlers.pop();
+            previousGameHandlers.push(tryMovement);
             return new NewGameState(Adapter.getCurrentPieces(tryMovement.currentGame().getBoard())
                     ,Adapter.getCurrentTurn(tryMovement.getTurnHandler()));
-        }
-        return new InvalidMove("No valid move");
     }
 
     @NotNull
