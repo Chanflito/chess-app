@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MoveDirector {
-    //TODO: Cuando haga el jaque o algun validador, meterlo en las piezas como and validator.
     public MoveHandler createPawnMovement(Color color){
         int direction= color==Color.WHITE?1:-1;
         List<MovementValidator> orValidator=new ArrayList<>();
@@ -122,30 +121,14 @@ public class MoveDirector {
     }
 
     private void setKnightValidator(List<MovementValidator> orValidator,List<MovementValidator> andValidator){
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(2,1))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(2,-1))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(-2,1))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(-2,-1))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(1,2))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(1,-2))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(-1,2))
-        ));
-        orValidator.add(new CompositeAndValidator(
-                List.of(new ComposeMovementValidator(-1,-2))
-        ));
+        orValidator.add(new ComposeMovementValidator(2,1));
+        orValidator.add(new ComposeMovementValidator(2,-1));
+        orValidator.add(new ComposeMovementValidator(-2,1));
+        orValidator.add(new ComposeMovementValidator(-2,-1));
+        orValidator.add(new ComposeMovementValidator(1,2));
+        orValidator.add(new ComposeMovementValidator(1,-2));
+        orValidator.add(new ComposeMovementValidator(-1,2));
+        orValidator.add(new ComposeMovementValidator(-1,-2));
         andValidator.add(new InBoardValidator());
     }
 }
