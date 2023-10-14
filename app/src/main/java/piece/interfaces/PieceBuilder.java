@@ -1,15 +1,12 @@
 package piece.interfaces;
 
 import enums.Color;
-import enums.TypePiece;
+import enums.PieceType;
 import piece.Piece;
-import validator.interfaces.MovementValidator;
-
-import java.util.List;
 
 public interface PieceBuilder {
     PieceBuilder color(Color color);
-    PieceBuilder type(TypePiece typePiece);
+    PieceBuilder type(PieceType pieceType);
     PieceBuilder movement(MoveHandler moveHandler);
 
     PieceBuilder id(String id);

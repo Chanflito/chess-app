@@ -1,6 +1,8 @@
 package game.interfaces;
 
 
+import piece.Movement;
+
 public interface GameHandler {
 
     Game currentGame();
@@ -9,5 +11,6 @@ public interface GameHandler {
 
     TurnHandler getTurnHandler();
 
+    GameHandler tryMovement(Movement movement, Game game);
     GameHandler copy();
 }

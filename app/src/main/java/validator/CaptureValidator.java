@@ -15,7 +15,9 @@ public class CaptureValidator implements MovementValidator {
 
     @Override
     public boolean isValid(Movement movement, Board board) {
-        if (!isCaptureEnabled) return false;
+        if (!isCaptureEnabled){
+            return !board.getPieces().containsKey(movement.getTo());
+        }
         if (board.getPieces().containsKey(movement.getTo())){
             Piece pieceToCapture=board.getPieces().get(movement.getTo()).copy();
             return pieceToCapture.getColor() != board.getPieces().get(movement.getFrom()).getColor();

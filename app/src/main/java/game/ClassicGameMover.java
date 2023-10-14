@@ -31,12 +31,13 @@ public class ClassicGameMover implements GameMover {
         List<Map<Position,Piece>> history= board.getHistory();
         history.add(board.getPieces());
         Piece pieceToMove=board.getPieces().get(movement.getFrom());
-        board.getPieces().put(movement.getFrom(),null);
+        board.getPieces().remove(movement.getFrom());
         board.getPieces().put(movement.getTo(),pieceToMove);
         return new ClassicGame(game.getPlayers(), board);
     }
 
     private boolean checkValidators(Movement movement, Game game, MoveHandler moveHandler) {
+        //TODO Change this before not or...
         return moveHandler.checkAndValidators(movement, game.getBoard())
                 && moveHandler.checkOrValidators(movement, game.getBoard());
     }

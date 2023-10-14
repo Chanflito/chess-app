@@ -1,20 +1,20 @@
 package piece;
 
 import enums.Color;
-import enums.TypePiece;
+import enums.PieceType;
 import piece.interfaces.MoveHandler;
 
 import java.util.Objects;
 
 public class Piece{
     private final Color color;
-    private final TypePiece type;
+    private final PieceType type;
 
     private final MoveHandler moveHandler;
 
     private final String id;
 
-    protected Piece(Color color, TypePiece type, MoveHandler moveHandler, String id) {
+    protected Piece(Color color, PieceType type, MoveHandler moveHandler, String id) {
         this.color = color;
         this.type = type;
         this.moveHandler = moveHandler;
@@ -24,7 +24,7 @@ public class Piece{
     public Color getColor() {
         return color;
     }
-    public TypePiece getType() {
+    public PieceType getType() {
         return type;
     }
 

@@ -1,51 +1,48 @@
 package piece;
 
 import enums.Color;
-import enums.TypePiece;
+import enums.PieceType;
 import piece.interfaces.MoveHandler;
 import piece.interfaces.PieceBuilder;
-import validator.interfaces.MovementValidator;
-
-import java.util.List;
 
 public class PieceCreator implements PieceBuilder {
     private Color color;
-    private TypePiece type;
+    private PieceType type;
 
     private MoveHandler moveHandler;
 
-    private String name;
+    private String id;
     public PieceCreator() {
     }
 
-    private PieceCreator(Color color, TypePiece type, MoveHandler movements, String name) {
+    private PieceCreator(Color color, PieceType type, MoveHandler movements, String id) {
         this.color = color;
         this.type = type;
         this.moveHandler = movements;
-        this.name=name;
+        this.id = id;
     }
 
     @Override
     public PieceCreator color(Color color) {
-        return new PieceCreator(color,this.type,this.moveHandler,name);
+        return new PieceCreator(color,this.type,this.moveHandler, id);
     }
 
     @Override
-    public PieceCreator type(TypePiece typePiece) {
-        return new PieceCreator(this.color,typePiece,this.moveHandler,this.name);
+    public PieceCreator type(PieceType pieceType) {
+        return new PieceCreator(this.color, pieceType,this.moveHandler,this.id);
     }
 
     @Override
     public PieceBuilder movement(MoveHandler moveHandler) {
-        return new PieceCreator(this.color,this.type, moveHandler,this.name);
+        return new PieceCreator(this.color,this.type, moveHandler,this.id);
     }
 
     @Override
-    public PieceCreator id(String name) {
-        return new PieceCreator(this.color,this.type,this.moveHandler,this.name);
+    public PieceCreator id(String id) {
+        return new PieceCreator(this.color,this.type,this.moveHandler,id);
     }
 
     public Piece getResult() {
-        return new Piece(this.color, this.type,this.moveHandler,name);
+        return new Piece(this.color, this.type,this.moveHandler, id);
     }
 }
