@@ -1,6 +1,8 @@
 package game;
 
 import enums.Color;
+import exception.InvalidTurnException;
+import exception.PlayerNotExistsException;
 import game.interfaces.Game;
 import game.interfaces.GameHandler;
 import game.interfaces.GameMover;
@@ -38,13 +40,16 @@ public class ClassicGameHandler implements GameHandler {
     public GameHandler tryMovement(Movement movement,Game game){
         Color playerColor=turnHandler.getCurrentTurn();
         for (Player p: game.getPlayers()) {
-            if (p.getColor().compareTo(playerColor)==0 && isPlayerColorEqualsPieceColor(movement, game, playerColor)){
-                Game currentGame=game.copy();
-                Game gameResult= gameMover.movePiece(movement,currentGame);
-                return new ClassicGameHandler(gameResult,gameMover,turnHandler.nextTurn());
+            if (p.getColor().compareTo(playerColor)==0){
+                if (isPlayerColorEqualsPieceColor(movement, game, playerColor)){
+                    Game currentGame=game.copy();
+                    Game gameResult= gameMover.movePiece(movement,currentGame);
+                    return new ClassicGameHandler(gameResult,gameMover,turnHandler.nextTurn());
+                }
+                throw new InvalidTurnException("It's turn of "+playerColor+" player.");
             }
         }
-        return null;
+        throw new PlayerNotExistsException("Player with color "+playerColor+" doesn't exists.");
     }
 
     @Override

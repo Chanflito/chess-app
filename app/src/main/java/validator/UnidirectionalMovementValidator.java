@@ -2,6 +2,7 @@ package validator;
 
 import board.Position;
 import board.interfaces.Board;
+import exception.InvalidMovementException;
 import piece.Movement;
 import validator.interfaces.MovementValidator;
 

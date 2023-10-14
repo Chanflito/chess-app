@@ -6,7 +6,6 @@ import piece.Piece;
 import piece.interfaces.MoveHandler;
 import piece.interfaces.PieceBuilder;
 
-//TODO CHANGE builder, no pasarselo como paremetro.
 public class PieceDirector {
     private final PieceBuilder builder;
     private int id;

@@ -1,6 +1,7 @@
 package validator;
 
 import board.interfaces.Board;
+import exception.InvalidMovementException;
 import piece.Movement;
 import validator.interfaces.MovementValidator;
 
@@ -10,13 +11,16 @@ public class InBoardValidator implements MovementValidator {
     public boolean isValid(Movement movement, Board board) {
         int rows= board.getRows();
         int columns= board.getColumns();
-        if (movement.getTo().x() < 0 || movement.getTo().x() >= rows) {
-            return false;
-        } else if (movement.getTo().y() < 0 || movement.getTo().y() >= columns) {
-            return false;
-        } else if (movement.getFrom().x() < 0 || movement.getFrom().x() >= rows) {
-            return false;
+        if (isOutsideFromBoard(movement, rows, columns)) {
+            throw new InvalidMovementException("The movement is out of the board.");
         }
-        return movement.getFrom().y() >= 0 && movement.getFrom().y() < columns;
+        return true;
+    }
+
+    private boolean isOutsideFromBoard(Movement movement, int rows, int columns) {
+        return movement.getTo().x() < 0 || movement.getTo().x() >= rows ||
+                movement.getTo().y() < 0 || movement.getTo().y() >= columns ||
+                movement.getFrom().x() < 0 || movement.getFrom().x() >= rows ||
+                movement.getFrom().y() < 0 || movement.getFrom().y() >= columns;
     }
 }

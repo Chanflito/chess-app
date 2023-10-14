@@ -3,6 +3,8 @@ package adapter;
 import director.BoardDirector;
 import edu.austral.dissis.chess.gui.*;
 import enums.Color;
+import exception.InvalidMovementException;
+import exception.InvalidTurnException;
 import game.*;
 import game.interfaces.GameHandler;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +15,7 @@ import java.util.Stack;
 public class DefaultGameEngine implements GameEngine {
 
     private final GameHandler gameHandler;
-    private Stack<GameHandler> previousGameHandlers=new Stack<>();
+    private final Stack<GameHandler> previousGameHandlers=new Stack<>();
     public DefaultGameEngine() {
         BoardDirector boardDirector = new BoardDirector();
         this.gameHandler= createClassicGame(boardDirector);
@@ -23,12 +25,16 @@ public class DefaultGameEngine implements GameEngine {
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
+        try{
             GameHandler tryMovement=previousGameHandlers.peek().tryMovement(Adapter.convertMove(move)
                     ,previousGameHandlers.peek().currentGame());
             previousGameHandlers.pop();
             previousGameHandlers.push(tryMovement);
             return new NewGameState(Adapter.getCurrentPieces(tryMovement.currentGame().getBoard())
                     ,Adapter.getCurrentTurn(tryMovement.getTurnHandler()));
+        }catch (InvalidTurnException | InvalidMovementException e){
+            return new InvalidMove(e.getMessage());
+        }
     }
 
     @NotNull
@@ -50,5 +56,4 @@ public class DefaultGameEngine implements GameEngine {
                 , boardDirector.createClassicBoard(8, 8)), new ClassicGameMover(),
                 new ClassicTurnHandler(Color.WHITE));
     }
-
 }
