@@ -27,7 +27,7 @@ public class ClassicMoveHandler implements MoveHandler {
     @Override
     public boolean checkAndValidators(Movement movement, Board board) {
         for (MovementValidator m: andValidator) {
-            if (!m.isValid(movement,board)) return false;
+            if (m.isValid(movement,board)) return false;
         }
         return true;
     }
