@@ -1,5 +1,7 @@
 package result;
 
+import java.util.Optional;
+
 public class MoveResult<K,V> implements Result<K,V>{
     private final K key;
     private final V value;
@@ -15,7 +17,7 @@ public class MoveResult<K,V> implements Result<K,V>{
     }
 
     @Override
-    public V getValue() {
-        return this.value;
+    public Optional<V> getValue() {
+        return Optional.ofNullable(this.value);
     }
 }

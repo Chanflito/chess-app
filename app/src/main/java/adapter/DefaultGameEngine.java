@@ -25,8 +25,8 @@ public class DefaultGameEngine implements GameEngine {
     public MoveResult applyMove(@NotNull Move move) {
             result.Result<GameHandler,String> tryMovement=previousGameHandlers.peek().tryMovement(Adapter.convertMove(move)
                     ,previousGameHandlers.peek().currentGame());
-            if (tryMovement.getValue()!=null){
-                return new InvalidMove(tryMovement.getValue());
+            if (tryMovement.getValue().isPresent()){
+                return new InvalidMove(tryMovement.getValue().get());
             }
             if (tryMovement.getKey().getWinner()!=null){
                 return new GameOver(Adapter.getWinner(tryMovement.getKey().getWinner()));

@@ -10,6 +10,8 @@ import piece.Movement;
 import result.MoveResult;
 import result.Result;
 
+import java.util.Optional;
+
 public class ClassicGameHandler implements GameHandler {
     private final Game game;
 
@@ -57,7 +59,7 @@ public class ClassicGameHandler implements GameHandler {
                 if (isPlayerColorEqualsPieceColor(movement, game, playerColor)){
                     Game currentGame=game.copy();
                     Result<Game,String> gameResult= makeMovement(movement, currentGame);
-                    return gameResult.getValue()==null ?
+                    return gameResult.getValue().isEmpty() ?
                             new MoveResult<>(new ClassicGameHandler(gameResult.getKey(), gameMover, turnHandler.nextTurn())
                                     , null): finalResult(gameResult);
 
@@ -72,13 +74,15 @@ public class ClassicGameHandler implements GameHandler {
     private MoveResult<GameHandler, String> finalResult(Result<Game, String> gameResult) {
         if (isWinner(gameResult)){
             return new MoveResult<>(new ClassicGameHandler(this.game,gameMover,this.turnHandler,
-                    new Player(Color.valueOf(gameResult.getValue()))),null);
+                    new Player(Color.valueOf(gameResult.getValue().get()))),
+                    null);
         }
-        return new MoveResult<>(this, gameResult.getValue());
+        return new MoveResult<>(this, gameResult.getValue().get());
     }
 
     private boolean isWinner(Result<Game, String> gameResult) {
-        return gameResult.getValue().equals(Color.WHITE.toString()) || gameResult.getValue().equals(Color.BLACK.toString());
+        return gameResult.getValue().get().equals(Color.WHITE.toString())
+                || gameResult.getValue().get().equals(Color.BLACK.toString());
     }
 
     @Override
