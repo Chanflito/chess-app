@@ -1,10 +1,9 @@
 package game.interfaces;
 
 
-import exception.InvalidMovementException;
-import exception.InvalidTurnException;
 import game.Player;
 import piece.Movement;
+import result.Result;
 
 public interface GameHandler {
 
@@ -16,6 +15,6 @@ public interface GameHandler {
 
     Player getWinner();
 
-    GameHandler tryMovement(Movement movement, Game game) throws InvalidMovementException, InvalidTurnException;
+    Result<GameHandler,String> tryMovement(Movement movement, Game game);
     GameHandler copy();
 }

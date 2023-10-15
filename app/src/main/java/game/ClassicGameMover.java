@@ -2,12 +2,8 @@ package game;
 
 import board.Position;
 import board.interfaces.Board;
-import edu.austral.dissis.chess.gui.Move;
-import enums.Color;
-import exception.InvalidMovementException;
 import game.interfaces.Game;
 import game.interfaces.GameMover;
-import org.jetbrains.annotations.NotNull;
 import piece.Movement;
 import piece.Piece;
 import piece.interfaces.MoveHandler;
@@ -19,13 +15,13 @@ import java.util.Map;
 public class ClassicGameMover implements GameMover {
 
     @Override
-    public MoveResult<Game, Color> movePiece(Movement movement, Game game) {
+    public MoveResult<Game, String> movePiece(Movement movement, Game game) {
         Piece piece=getPieceInPosition(game.getBoard(),movement.getFrom());
         MoveHandler moveHandler=piece.getMoveHandler();
         if (checkValidators(movement, game, moveHandler)){
             return new MoveResult<>(makeMovement(movement, game),null);
         }
-        throw new InvalidMovementException("Invalid movement");
+        return new MoveResult<>(game,"Invalid Movement");
     }
 
 

@@ -3,8 +3,6 @@ package adapter;
 import director.BoardDirector;
 import edu.austral.dissis.chess.gui.*;
 import enums.Color;
-import exception.InvalidMovementException;
-import exception.InvalidTurnException;
 import game.*;
 import game.interfaces.GameHandler;
 import org.jetbrains.annotations.NotNull;
@@ -25,16 +23,18 @@ public class DefaultGameEngine implements GameEngine {
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-        try{
-            GameHandler tryMovement=previousGameHandlers.peek().tryMovement(Adapter.convertMove(move)
+            result.Result<GameHandler,String> tryMovement=previousGameHandlers.peek().tryMovement(Adapter.convertMove(move)
                     ,previousGameHandlers.peek().currentGame());
+            if (tryMovement.getValue()!=null){
+                return new InvalidMove(tryMovement.getValue());
+            }
+            if (tryMovement.getKey().getWinner()!=null){
+                return new GameOver(Adapter.getWinner(tryMovement.getKey().getWinner()));
+            }
             previousGameHandlers.pop();
-            previousGameHandlers.push(tryMovement);
-            return new NewGameState(Adapter.getCurrentPieces(tryMovement.currentGame().getBoard())
-                    ,Adapter.getCurrentTurn(tryMovement.getTurnHandler()));
-        }catch (InvalidTurnException | InvalidMovementException e){
-            return new InvalidMove(e.getMessage());
-        }
+            previousGameHandlers.push(tryMovement.getKey());
+            return new NewGameState(Adapter.getCurrentPieces(tryMovement.getKey().currentGame().getBoard())
+                    ,Adapter.getCurrentTurn(tryMovement.getKey().getTurnHandler()));
     }
 
     @NotNull

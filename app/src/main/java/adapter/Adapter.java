@@ -7,6 +7,7 @@ import edu.austral.dissis.chess.gui.ChessPiece;
 import edu.austral.dissis.chess.gui.Move;
 import edu.austral.dissis.chess.gui.PlayerColor;
 import enums.Color;
+import game.Player;
 import game.interfaces.TurnHandler;
 import piece.Movement;
 import piece.Piece;
@@ -34,6 +35,10 @@ public class Adapter {
         return turnHandler.getCurrentTurn()== Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
     }
 
+    public static PlayerColor getWinner(Player player){
+        return player.getColor()==Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
+    }
+
 
     public static Movement convertMove(Move move){
         return new Movement (new Position(move.getFrom().getColumn()-1,move.getFrom().getRow()-1)
@@ -47,4 +52,5 @@ public class Adapter {
     public static edu.austral.dissis.chess.gui.Position convertPosition(Position position){
         return new edu.austral.dissis.chess.gui.Position(position.y()+1, position.x()+1);
     }
+
 }
