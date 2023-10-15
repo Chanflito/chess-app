@@ -5,6 +5,8 @@ import piece.Movement;
 import piece.Piece;
 import validator.interfaces.MovementValidator;
 
+import java.util.Optional;
+
 public class CaptureValidator implements MovementValidator {
 
     private final boolean isCaptureEnabled;
@@ -24,4 +26,5 @@ public class CaptureValidator implements MovementValidator {
         }
         return false;
     }
+
 }
