@@ -28,7 +28,7 @@ public class QuantityMovementValidator implements MovementValidator {
     private boolean validateDistinctMovements(Position currentPosition, Piece piece, List<Map<Position, Piece>> historyOfMovements, int counter) {
         for (int i = historyOfMovements.size()-1; i>=0; i--){
             Map<Position,Piece> current= historyOfMovements.get(i);
-            if (!current.get(currentPosition).equals(piece)){
+            if (!current.containsKey(currentPosition)){
                 //I have to search the piece if not equals.
                 for (Map.Entry<Position,Piece> entry:current.entrySet()){
                     if (entry.getValue().equals(piece)){
