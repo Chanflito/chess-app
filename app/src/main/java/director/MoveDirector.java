@@ -63,7 +63,9 @@ public class MoveDirector {
                 new IncrementValidator(1),new CaptureValidator(true))));
         orValidator.add(new CompositeAndValidator(List.of(new UnidirectionalMovementValidator(direction,0),new IncrementValidator(2)
                 ,new CaptureValidator(false),new QuantityMovementValidator(0))));
-        addDefaultAndValidator(andValidator);
+        andValidator.add(new InBoardValidator());
+        andValidator.add(new CheckValidator());
+        andValidator.add(new CaptureValidator(true));
     }
 
     private void setRooksValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
@@ -170,5 +172,6 @@ public class MoveDirector {
     private static void addDefaultAndValidator(List<MovementValidator> andValidator){
         andValidator.add(new InBoardValidator());
         andValidator.add(new CheckValidator());
+        andValidator.add(new CaptureValidator(true));
     }
 }

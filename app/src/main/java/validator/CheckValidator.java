@@ -22,34 +22,46 @@ public class CheckValidator implements MovementValidator {
     public boolean isValid(Movement movement, Board board) {
         Color kingColorToFind=board.getPieces().get(movement.getFrom()).getColor();
         Map<Position, Piece> pieces=board.getPieces();
-        return checkIsValid(board, kingColorToFind, pieces);
+        Piece playerPiece=board.getPieces().get(movement.getFrom());
+        return checkIsValid(board, kingColorToFind, pieces,movement,playerPiece);
     }
 
 
-    private boolean checkIsValid(Board board, Color kingColorToFind, Map<Position, Piece> pieces) {
+    private boolean checkIsValid(Board board, Color kingColorToFind, Map<Position, Piece> pieces,
+                                 Movement movement,Piece playerPiece) {
         for(Map.Entry<Position,Piece> playerMap: pieces.entrySet()){
             if (playerMap.getValue().getColor().equals(kingColorToFind)){
                 if (playerMap.getValue().getType().equals(PieceType.KING)){
+                    Position kingPosition=playerMap.getKey();
                     Color otherColor= playerMap.getValue().getColor().equals(Color.WHITE)? Color.BLACK: Color.WHITE;
-                    return checkMovementsOfEnemy(board,pieces,playerMap,otherColor);
+                    return checkMovementsOfEnemy(board,pieces,kingPosition,otherColor,movement,playerPiece);
                 }
             }
         }
         return false;
     }
 
-    private boolean checkMovementsOfEnemy(Board board, Map<Position, Piece> pieces, Map.Entry<Position, Piece> playerMap, Color enemyColor) {
+    private boolean checkMovementsOfEnemy(Board board, Map<Position, Piece> pieces,
+                                          Position kingPosition, Color enemyColor,Movement movement,Piece piece) {
         for (Map.Entry<Position,Piece> enemyMap: pieces.entrySet()){
             if (enemyMap.getValue().getColor().equals(enemyColor)){
-                if (checkValidatorsOfEnemy(board, playerMap, enemyMap)) return true;
+                Position enemyPosition=enemyMap.getKey();
+                Piece enemyPiece=enemyMap.getValue();
+                if (checkValidatorsOfEnemy(board, kingPosition, enemyPosition,enemyPiece,movement,piece)){
+                    return true;
+                }
             }
         }
         return false;
     }
-
-    private  boolean checkValidatorsOfEnemy(Board board, Map.Entry<Position, Piece> p, Map.Entry<Position, Piece> e) {
-        return e.getValue().getMoveHandler().checkOrValidators
-                (new Movement(e.getKey(), p.getKey()), board) &&
-                !e.getValue().getMoveHandler().checkAndValidators(new Movement(e.getKey(), p.getKey()), board);
+    //TODO: Make more legible this method
+    private  boolean checkValidatorsOfEnemy(Board board, Position kingPosition,
+                                            Position enemyPosition ,Piece enemyPiece,Movement movement,Piece piece) {
+        Board boardClone=board.copy();
+        boardClone.getPieces().put(movement.getTo(),piece);
+        return enemyPiece.getMoveHandler().
+                checkOrValidators(new Movement(enemyPosition, kingPosition), board) && enemyPiece.getMoveHandler().
+                checkOrValidators(new Movement(enemyPosition, kingPosition), boardClone)
+                &&!movement.getTo().equals(enemyPosition) ;
     }
 }

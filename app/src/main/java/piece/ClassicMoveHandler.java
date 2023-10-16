@@ -15,15 +15,6 @@ public class ClassicMoveHandler implements MoveHandler {
         this.andValidators = andValidators;
     }
 
-    @Override
-    public List<MovementValidator> getOrValidators() {
-        return this.orValidators;
-    }
-
-    @Override
-    public List<MovementValidator> getAndValidators() {
-        return this.andValidators;
-    }
 
     @Override
     public boolean checkOrValidators(Movement movement, Board board) {

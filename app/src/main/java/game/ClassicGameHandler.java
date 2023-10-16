@@ -7,6 +7,7 @@ import game.interfaces.GameMover;
 import game.interfaces.TurnHandler;
 import org.jetbrains.annotations.NotNull;
 import piece.Movement;
+import piece.Piece;
 import result.MoveResult;
 import result.Result;
 
@@ -52,8 +53,16 @@ public class ClassicGameHandler implements GameHandler {
         return this.winner;
     }
 
+    @Override
+    public GameHandler copy() {
+        return new ClassicGameHandler(game.copy(),this.gameMover,turnHandler.nextTurn());
+    }
+    @Override
     public MoveResult<GameHandler,String> tryMovement(Movement movement,Game game){
         Color playerColor=turnHandler.getCurrentTurn();
+        if (findPiece(movement, game) ==null){
+            return new MoveResult<>(this,"There is no piece in that position.");}
+
         for (Player p: game.getPlayers()) {
             if (p.getColor().compareTo(playerColor)==0){
                 if (isPlayerColorEqualsPieceColor(movement, game, playerColor)){
@@ -70,6 +79,8 @@ public class ClassicGameHandler implements GameHandler {
         return new MoveResult<>(this, "Player with color "+playerColor+" doesn't exists.");
     }
 
+
+
     @NotNull
     private MoveResult<GameHandler, String> finalResult(Result<Game, String> gameResult) {
         if (isWinner(gameResult)){
@@ -85,15 +96,16 @@ public class ClassicGameHandler implements GameHandler {
                 || gameResult.getValue().get().equals(Color.BLACK.toString());
     }
 
-    @Override
-    public GameHandler copy() {
-        return new ClassicGameHandler(game.copy(),this.gameMover,turnHandler.nextTurn());
-    }
+
 
     private boolean isPlayerColorEqualsPieceColor(Movement movement, Game game, Color playerColor) {
-        return game.getBoard().getPieces().get(movement.getFrom()).getColor() == playerColor;
+        return findPiece(movement, game).getColor() == playerColor;
     }
     private Result<Game, String> makeMovement(Movement movement, Game currentGame) {
         return this.getGameMover().movePiece(movement, currentGame);
+    }
+
+    private Piece findPiece(Movement movement, Game game) {
+        return game.getBoard().getPieces().get(movement.getFrom());
     }
 }

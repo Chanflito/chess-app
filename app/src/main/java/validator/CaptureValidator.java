@@ -22,7 +22,7 @@ public class CaptureValidator implements MovementValidator {
         }
         if (board.getPieces().containsKey(movement.getTo())){
             Piece pieceToCapture=board.getPieces().get(movement.getTo()).copy();
-            return pieceToCapture.getColor() != board.getPieces().get(movement.getFrom()).getColor();
+            return pieceToCapture.getColor() == board.getPieces().get(movement.getFrom()).getColor();
         }
         return false;
     }
