@@ -8,8 +8,8 @@ public class InBoardValidator implements MovementValidator {
     //Checks any posibility of the movement to be out of the board.
     @Override
     public boolean isValid(Movement movement, Board board) {
-        int rows= board.getRows();
-        int columns= board.getColumns();
+        int rows= board.getSizeOfRows();
+        int columns= board.getSizeOfColumns();
         return isOutsideFromBoard(movement, rows, columns);
     }
 

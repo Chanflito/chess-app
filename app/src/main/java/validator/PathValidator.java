@@ -21,7 +21,7 @@ public class PathValidator implements MovementValidator {
         Position finalPosition=movement.getTo().copy();
         int x= initialPosition.x();
         int y= initialPosition.y();
-        while (x<=board.getRows() -1 && y<= board.getColumns() -1){
+        while (x<=board.getSizeOfRows() -1 && y<= board.getSizeOfColumns() -1){
             x+=rows;
             y+=columns;
             Position evaluate=new Position(x,y);

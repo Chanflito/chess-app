@@ -65,7 +65,6 @@ public class MoveDirector {
                 ,new CaptureValidator(false),new QuantityMovementValidator(0))));
         andValidator.add(new InBoardValidator());
         andValidator.add(new CheckValidator());
-        andValidator.add(new CaptureValidator(true));
     }
 
     private void setRooksValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
@@ -172,6 +171,5 @@ public class MoveDirector {
     private static void addDefaultAndValidator(List<MovementValidator> andValidator){
         andValidator.add(new InBoardValidator());
         andValidator.add(new CheckValidator());
-        andValidator.add(new CaptureValidator(true));
     }
 }

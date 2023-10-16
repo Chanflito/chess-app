@@ -17,17 +17,18 @@ public class UnidirectionalMovementValidator implements MovementValidator {
 
     @Override
     public boolean isValid(Movement movement, Board board) {
-        Position initialPosition=movement.getFrom().copy();
-        Position finalPosition=movement.getTo().copy();
-        if (finalPosition.x() >= board.getRows() || finalPosition.y()>= board.getColumns()) return false;
-        int x= initialPosition.x();
-        int y= initialPosition.y();
-        while (Math.abs(x)<=board.getRows() -1 && Math.abs(y)<= board.getColumns() -1){
-            x+=rows;
-            y+=columns;
-            Position evaluate=new Position(x,y);
-            if (evaluate.equals(finalPosition)) return true;
+        Position position= new Position(movement.getFrom().x()+ rows,movement.getFrom().y()+ columns);
+        if (checkIfIsInsideBoard(position, board)) return false;
+        while (!position.equals(movement.getTo())){
+            position= new Position(position.x()+ rows,position.y()+ columns);
+            if (checkIfIsInsideBoard(position, board)) return false;
         }
-        return false;
+        return true;
+    }
+
+
+    private boolean checkIfIsInsideBoard(Position position,Board board){
+        return position.y() < 0 || position.y() >= board.getSizeOfColumns()
+                || position.x() < 0 || position.x() >= board.getSizeOfRows();
     }
 }

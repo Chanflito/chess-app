@@ -21,12 +21,12 @@ public class RectangularBoard implements Board {
 
 
     @Override
-    public int getRows() {
+    public int getSizeOfRows() {
         return rows;
     }
 
     @Override
-    public int getColumns() {
+    public int getSizeOfColumns() {
         return columns;
     }
 

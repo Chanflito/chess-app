@@ -28,7 +28,7 @@ public class Adapter {
     }
 
     public static BoardSize getBoardSize(Board board){
-        return new BoardSize(board.getRows(),board.getColumns());
+        return new BoardSize(board.getSizeOfRows(),board.getSizeOfColumns());
     }
 
     public static PlayerColor getCurrentTurn(TurnHandler turnHandler){

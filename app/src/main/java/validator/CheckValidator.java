@@ -20,10 +20,11 @@ public class CheckValidator implements MovementValidator {
 
     @Override
     public boolean isValid(Movement movement, Board board) {
+        Movement movementClone = new Movement(movement.getFrom(), movement.getTo());
         Color kingColorToFind=board.getPieces().get(movement.getFrom()).getColor();
         Map<Position, Piece> pieces=board.getPieces();
         Piece playerPiece=board.getPieces().get(movement.getFrom());
-        return checkIsValid(board, kingColorToFind, pieces,movement,playerPiece);
+        return checkIsValid(board, kingColorToFind, pieces,movementClone,playerPiece);
     }
 
 

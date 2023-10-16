@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface Board{
-    int getRows();
-    int getColumns();
+    int getSizeOfRows();
+    int getSizeOfColumns();
     Map<Position, Piece> getPieces();
 
     List<Map<Position,Piece>> getHistory();
