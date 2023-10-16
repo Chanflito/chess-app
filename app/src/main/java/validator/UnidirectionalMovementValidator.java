@@ -22,7 +22,7 @@ public class UnidirectionalMovementValidator implements MovementValidator {
         if (finalPosition.x() >= board.getRows() || finalPosition.y()>= board.getColumns()) return false;
         int x= initialPosition.x();
         int y= initialPosition.y();
-        while (x<=board.getRows() -1 && y<= board.getColumns() -1){
+        while (Math.abs(x)<=board.getRows() -1 && Math.abs(y)<= board.getColumns() -1){
             x+=rows;
             y+=columns;
             Position evaluate=new Position(x,y);
