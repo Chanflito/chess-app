@@ -60,9 +60,10 @@ public class CheckValidator implements MovementValidator {
                                             Position enemyPosition ,Piece enemyPiece,Movement movement,Piece piece) {
         Board boardClone=board.copy();
         boardClone.getPieces().put(movement.getTo(),piece);
+        Position position= movement.getFrom().equals(kingPosition) ? movement.getTo().copy() : kingPosition.copy();
         return enemyPiece.getMoveHandler().
-                checkOrValidators(new Movement(enemyPosition, kingPosition), board) && enemyPiece.getMoveHandler().
-                checkOrValidators(new Movement(enemyPosition, kingPosition), boardClone)
+                checkOrValidators(new Movement(enemyPosition, position), board) && enemyPiece.getMoveHandler().
+                checkOrValidators(new Movement(enemyPosition, position), boardClone)
                 &&!movement.getTo().equals(enemyPosition) ;
     }
 }
