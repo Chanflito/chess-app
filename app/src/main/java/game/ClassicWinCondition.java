@@ -14,7 +14,7 @@ import java.util.Map;
 public class ClassicWinCondition implements GameOverCondition {
 
     //Debo ver si mis piezas pueden realizar cualquier movimiento hacia cualquier parte del tablero.
-    //Si no pueden realizar movimientos, es porque estan en jaque, y si ninguna puede zafar del jaque, se termina la partida.
+    //Si ninguna puede realizar movimientos, es porque estan en jaque , y si ninguna puede zafar del jaque, se termina la partida.
 
     @Override
     public Result<Boolean, Player> evaluateCondition(Movement movement, GameHandler gameHandler) {
