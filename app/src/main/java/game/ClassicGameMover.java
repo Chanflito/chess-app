@@ -12,7 +12,9 @@ import result.MoveResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+//Para el caso del enroque no deberia ser valido un movimiento, solamente el enroque deberia ser valido.
+//Para el caso de la promocion,es valido el movimiento y la promocion.
+//El jaque no se considera un movimiento especial, sino una condicion para que termine el juego.
 public class ClassicGameMover implements GameMover {
 
     @Override

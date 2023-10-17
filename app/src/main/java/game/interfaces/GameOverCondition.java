@@ -1,10 +1,10 @@
 package game.interfaces;
 
 
-import game.Player;
+import enums.Color;
 import piece.Movement;
 import result.Result;
 
 public interface GameOverCondition {
-    Result<Boolean,Player> evaluateCondition(Movement movement, GameHandler gameHandler);
+    Result<Boolean, Color> evaluateCondition(Movement movement, GameOrganizer gameOrganizer);
 }

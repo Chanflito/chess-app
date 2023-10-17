@@ -23,7 +23,6 @@ public class ClassicMoveHandler implements MoveHandler {
         }
         return false;
     }
-    //TODO: Agregar un turn validator en el andValidator
     @Override
     public boolean checkAndValidators(Movement movement, Board board) {
         for (MovementValidator m: andValidators) {
@@ -31,6 +30,4 @@ public class ClassicMoveHandler implements MoveHandler {
         }
         return true;
     }
-    //Todo agregar un validador del jaque mate especial.
-
 }

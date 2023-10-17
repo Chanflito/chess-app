@@ -1,19 +1,14 @@
 package game;
 
 import enums.Color;
-import game.interfaces.Game;
-import game.interfaces.GameHandler;
-import game.interfaces.GameMover;
-import game.interfaces.TurnHandler;
-import org.jetbrains.annotations.NotNull;
+import game.interfaces.*;
 import piece.Movement;
 import piece.Piece;
 import result.MoveResult;
 import result.Result;
 
-import java.util.Optional;
+public class ClassicGameOrganizer implements GameOrganizer {
 
-public class ClassicGameHandler implements GameHandler {
     private final Game game;
 
     private final GameMover gameMover;
@@ -21,18 +16,16 @@ public class ClassicGameHandler implements GameHandler {
     private final TurnHandler turnHandler;
 
     private Player winner;
-    public ClassicGameHandler(Game game, GameMover gameMover, TurnHandler turnHandler) {
+
+    private final GameOverCondition gameOverCondition;
+
+    public ClassicGameOrganizer(Game game, GameMover gameMover, TurnHandler turnHandler, GameOverCondition gameOverCondition) {
         this.game = game;
         this.gameMover = gameMover;
         this.turnHandler = turnHandler;
+        this.gameOverCondition = gameOverCondition;
     }
 
-    private ClassicGameHandler(Game game,GameMover gameMover,TurnHandler turnHandler,Player winner){
-        this.game=game;
-        this.gameMover=gameMover;
-        this.turnHandler=turnHandler;
-        this.winner=winner;
-    }
     @Override
     public Game currentGame() {
         return this.game;
@@ -54,11 +47,23 @@ public class ClassicGameHandler implements GameHandler {
     }
 
     @Override
-    public GameHandler copy() {
-        return new ClassicGameHandler(game.copy(),this.gameMover,turnHandler.nextTurn());
+    public Result<Boolean, Color> isGameOver(Movement movement) {
+        //Ver inmutabilidad aca.
+        return this.gameOverCondition.evaluateCondition(movement, this);
     }
+
     @Override
-    public MoveResult<GameHandler,String> tryMovement(Movement movement,Game game){
+    public GameOrganizer copy() {
+        return new ClassicGameOrganizer(game.copy(),this.gameMover,turnHandler.nextTurn(),this.gameOverCondition);
+    }
+
+    @Override
+    public GameOverCondition getGameOverCondition() {
+        return this.gameOverCondition;
+    }
+
+    @Override
+    public MoveResult<GameOrganizer,String> tryMovement(Movement movement, Game game){
         Color playerColor=turnHandler.getCurrentTurn();
         if (findPiece(movement, game) ==null){
             return new MoveResult<>(this,"There is no piece in that position.");}
@@ -69,31 +74,15 @@ public class ClassicGameHandler implements GameHandler {
                     Game currentGame=game.copy();
                     Result<Game,String> gameResult= makeMovement(movement, currentGame);
                     return gameResult.getValue().isEmpty() ?
-                            new MoveResult<>(new ClassicGameHandler(gameResult.getKey(), gameMover, turnHandler.nextTurn())
-                                    , null): finalResult(gameResult);
+                            new MoveResult<>(new
+                                    ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler.nextTurn(),this.gameOverCondition),null):
+                                    new MoveResult<>(new ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler, this.gameOverCondition),gameResult.getValue().get());
 
                 }
                 return new MoveResult<>(this,"It's turn of "+playerColor+" player.");
             }
         }
         return new MoveResult<>(this, "Player with color "+playerColor+" doesn't exists.");
-    }
-
-
-
-    @NotNull
-    private MoveResult<GameHandler, String> finalResult(Result<Game, String> gameResult) {
-        if (isWinner(gameResult)){
-            return new MoveResult<>(new ClassicGameHandler(this.game,gameMover,this.turnHandler,
-                    new Player(Color.valueOf(gameResult.getValue().get()))),
-                    null);
-        }
-        return new MoveResult<>(this, gameResult.getValue().get());
-    }
-
-    private boolean isWinner(Result<Game, String> gameResult) {
-        return gameResult.getValue().get().equals(Color.WHITE.toString())
-                || gameResult.getValue().get().equals(Color.BLACK.toString());
     }
 
 

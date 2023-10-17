@@ -35,8 +35,8 @@ public class Adapter {
         return turnHandler.getCurrentTurn()== Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
     }
 
-    public static PlayerColor getWinner(Player player){
-        return player.getColor()==Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
+    public static PlayerColor getWinner(Color color){
+        return color==Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
     }
 
 
