@@ -5,6 +5,7 @@ import board.interfaces.Board;
 import enums.Color;
 import game.interfaces.GameOrganizer;
 import game.interfaces.GameOverCondition;
+import org.jetbrains.annotations.Nullable;
 import piece.Movement;
 import piece.Piece;
 import result.Result;
@@ -25,28 +26,34 @@ public class ClassicWinCondition implements GameOverCondition {
         Movement movementOfCurrentPlayer= new Movement(movement.getFrom(),movement.getTo());
         //Si mi movimiento es valido, tengo que probar si deja en jaque al otro.
         if (checkIfOwnMovementIsValid(gameOrganizer, movementOfCurrentPlayer)){
-
             Piece pieceToMove= currentBoard.getPieces().get(movement.getFrom());
             Position initialPosition= movement.getFrom();
             currentBoard.getPieces().remove(initialPosition);
             currentBoard.getPieces().put(movement.getTo(),pieceToMove.copy());//Hago que el tablero que estoy evaluando tenga la pieza con el movimiento.
             List<Position>positionsOfEnemy=getPositionsOfPiecesOfColor(currentBoard,oponentColor);
-            for (Position position: positionsOfEnemy){
-                for (int i = 0; i < currentBoard.getSizeOfColumns(); i++) {
-                    for (int j = 0; j < currentBoard.getSizeOfRows(); j++) {
-                        //Pruebo todos los casos posibles de movimiento del oponente.
-                        Movement move= new Movement(position,new Position(i,j));
-                        Piece piece= currentBoard.getPieces().get(position);
-                        if (checkMovementsOfEnemy(currentBoard, move, piece)){
-                            //Si alguno de los movimientos del oponente es valido, entonces no hay jaque mate.
-                            return new WinResult(false,null);
-                        }
-                    }
-                }
-            }
+            WinResult checkWon = getWinResult(currentBoard, positionsOfEnemy);
+            if (checkWon != null) return checkWon;
             return new WinResult(true,currentColor);
         }
         return new WinResult(false,null);
+    }
+
+    @Nullable
+    private WinResult getWinResult(Board currentBoard, List<Position> positionsOfEnemy) {
+        for (Position position: positionsOfEnemy){
+            for (int i = 0; i < currentBoard.getSizeOfColumns(); i++) {
+                for (int j = 0; j < currentBoard.getSizeOfRows(); j++) {
+                    //Pruebo todos los casos posibles de movimiento del oponente.
+                    Movement move= new Movement(position,new Position(i,j));
+                    Piece piece= currentBoard.getPieces().get(position);
+                    if (checkMovementsOfEnemy(currentBoard, move, piece)){
+                        //Si alguno de los movimientos del oponente es valido, entonces no hay jaque mate.
+                        return new WinResult(false, null);
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private boolean checkMovementsOfEnemy(Board currentBoard, Movement move, Piece piece) {
