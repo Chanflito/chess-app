@@ -55,12 +55,13 @@ public class CheckValidator implements MovementValidator {
         }
         return false;
     }
-    private  boolean checkValidatorsOfEnemy(Board board, Position kingPosition,
+    private boolean checkValidatorsOfEnemy(Board board, Position kingPosition,
                                             Position enemyPosition ,Piece enemyPiece,Movement movement,Piece piece) {
         Board boardClone=board.copy();
         boardClone.getPieces().put(movement.getTo(),piece);
         Position position= movement.getFrom().equals(kingPosition) ? movement.getTo().copy() : kingPosition.copy();
-        return checkIfEnemyCanCapture(board, enemyPosition, enemyPiece, position) && checkKingIsSafe(enemyPosition, enemyPiece, boardClone, position)
+        return checkIfEnemyCanCapture(board, enemyPosition, enemyPiece, position) &&
+                checkKingIsSafe(enemyPosition, enemyPiece, boardClone, position)
                 && checkMovementToEnemy(enemyPosition, movement);
     }
 
