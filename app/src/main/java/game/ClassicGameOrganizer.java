@@ -15,7 +15,6 @@ public class ClassicGameOrganizer implements GameOrganizer {
 
     private final TurnHandler turnHandler;
 
-    private Player winner;
 
     private final GameOverCondition gameOverCondition;
 
@@ -41,10 +40,6 @@ public class ClassicGameOrganizer implements GameOrganizer {
         return this.turnHandler;
     }
 
-    @Override
-    public Player getWinner() {
-        return this.winner;
-    }
 
     @Override
     public Result<Boolean, Color> isGameOver(Movement movement) {

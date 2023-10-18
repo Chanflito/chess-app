@@ -20,7 +20,7 @@ public interface GameOrganizer {
 
     GameMover getGameMover();
     TurnHandler getTurnHandler();
-    Player getWinner();
+//    Player getWinner();
 
     MoveResult<GameOrganizer,String> tryMovement(Movement movement, Game game);
 
