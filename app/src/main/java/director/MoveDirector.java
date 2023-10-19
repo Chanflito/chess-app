@@ -260,4 +260,5 @@ public class MoveDirector {
         andValidator.add(new InBoardValidator());
         andValidator.add(new CheckValidator());
     }
+
 }

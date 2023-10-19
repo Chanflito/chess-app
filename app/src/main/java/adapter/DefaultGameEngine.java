@@ -17,7 +17,7 @@ public class DefaultGameEngine implements GameEngine {
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
         BoardDirector boardDirector = new BoardDirector();
-        this.gameOrganizer = createClassicGame(boardDirector);
+        this.gameOrganizer = createCustomGame(boardDirector);
         previousGameOrganizers.push(gameOrganizer);
     }
 
@@ -58,9 +58,9 @@ public class DefaultGameEngine implements GameEngine {
                 , boardDirector.createClassicBoard(8, 8)), new ClassicGameMover(),
                 new ClassicTurnHandler(Color.WHITE), new ClassicWinCondition());
     }
-    private static ClassicGameOrganizer createCapablancaGame(BoardDirector boardDirector) {
+    private static ClassicGameOrganizer createCustomGame(BoardDirector boardDirector) {
         return new ClassicGameOrganizer(new ClassicGame(List.of(new Player(Color.WHITE), new Player(Color.BLACK))
-                , boardDirector.createCapablancaBoard(10, 8)), new ClassicGameMover(),
+                , boardDirector.createCustomChess(8, 8)), new ClassicGameMover(),
                 new ClassicTurnHandler(Color.WHITE), new ClassicWinCondition());
     }
 }
