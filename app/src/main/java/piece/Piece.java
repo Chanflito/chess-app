@@ -14,7 +14,7 @@ public class Piece{
 
     private final String id;
 
-    protected Piece(Color color, PieceType type, MoveHandler moveHandler, String id) {
+    public Piece(Color color, PieceType type, MoveHandler moveHandler, String id) {
         this.color = color;
         this.type = type;
         this.moveHandler = moveHandler;

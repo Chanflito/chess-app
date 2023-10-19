@@ -8,6 +8,7 @@ import piece.Movement;
 import piece.Piece;
 import piece.interfaces.MoveHandler;
 import result.MoveResult;
+import result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -21,12 +22,27 @@ public class ClassicGameMover implements GameMover {
     public MoveResult<Game, String> movePiece(Movement movement, Game game) {
         Piece piece=getPieceInPosition(game.getBoard(),movement.getFrom());
         MoveHandler moveHandler=piece.getMoveHandler();
+        Board previousBoard=game.getBoard().copy();
+        Result<Board,Boolean> result=checkSpecialValidatorsAndAndValidators(movement,game,moveHandler);
+        if (result.getValue().get()){
+            Board resultCloneBoard=result.getKey().copy();
+            resultCloneBoard.getHistory().add(previousBoard.getPieces());
+            return new MoveResult<>(new ClassicGame(game.getPlayers(),resultCloneBoard),null);
+        }
         if (checkValidators(movement, game, moveHandler)){
             return new MoveResult<>(makeMovement(movement, game),null);
         }
         return new MoveResult<>(game,"Invalid Movement");
     }
-
+    private Result<Board,Boolean> checkSpecialValidatorsAndAndValidators(Movement movement, Game game,MoveHandler moveHandler){
+        Result<Board,Boolean> result=moveHandler.checkSpecialValidators(movement, game.getBoard());
+        if (result.getValue().isPresent()){
+            if (result.getValue().get() && moveHandler.checkAndValidators(movement, game.getBoard())){
+                return result;
+            }
+        }
+        return new MoveResult<>(game.getBoard(),false);
+    }
 
     private ClassicGame makeMovement(Movement movement, Game game) {
         Board board= game.getBoard().copy();
