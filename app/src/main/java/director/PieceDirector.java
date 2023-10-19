@@ -42,5 +42,12 @@ public class PieceDirector {
         return builder.color(color).id(Integer.toString(id++))
                 .movement(moveHandler).type(PieceType.KNIGHT).getResult();
     }
-
+    public Piece createArchBishop(Color color,MoveHandler moveHandler){
+        return builder.color(color).id(Integer.toString(id++))
+                .movement(moveHandler).type(PieceType.ARCHBISHOP).getResult();
+    }
+    public Piece createChancellor(Color color,MoveHandler moveHandler){
+        return builder.color(color).id(Integer.toString(id++))
+                .movement(moveHandler).type(PieceType.CHANCELLOR).getResult();
+    }
 }

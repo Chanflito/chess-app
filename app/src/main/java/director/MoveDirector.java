@@ -60,6 +60,25 @@ public class MoveDirector {
         setKingValidator(orValidator,andValidator);
         return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
     }
+
+    public MoveHandler createArchBishopMovement(){
+        List<MovementValidator> orValidator=new ArrayList<>();
+        List<MovementValidator> andValidator=new ArrayList<>();
+        List<PieceMover> pieceMovers=new ArrayList<>();
+        setBishopValidator(orValidator,andValidator);
+        setKnightValidator(orValidator,andValidator);
+        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+    }
+
+    public MoveHandler createChancellorMovement(){
+        List<MovementValidator> orValidator=new ArrayList<>();
+        List<MovementValidator> andValidator=new ArrayList<>();
+        List<PieceMover> pieceMovers=new ArrayList<>();
+
+        setRooksValidator(orValidator,andValidator);
+        setKnightValidator(orValidator,andValidator);
+        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+    }
     private void setPawnsValidator(int direction,
                                           List<MovementValidator> orValidator, List<MovementValidator> andValidator,
                                    List<PieceMover> pieceMovers) {
@@ -182,6 +201,60 @@ public class MoveDirector {
         ));
         addDefaultAndValidator(andValidator);
     }
+
+
+    private void setArchBishopValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(1,1),new PathValidator(1,1),new CaptureValidator(true)))
+        );
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(-1,-1),new PathValidator(-1,-1),new CaptureValidator(true))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(-1,1),new PathValidator(-1,1),new CaptureValidator(true))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(1,-1),new PathValidator(1,-1),new CaptureValidator(true))
+        ));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(2,1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(2,-1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-2,1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-2,-1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(1,2),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(1,-2),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-1,2),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-1,-2),new CaptureValidator(true))));
+        addDefaultAndValidator(andValidator);
+    }
+
+
+    private void setChancellorValidator(List<MovementValidator> orValidator,List<MovementValidator> andValidator){
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(1,0),
+                        new PathValidator(1,0),new CaptureValidator(true)))
+        );
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(-1,0),new PathValidator(-1,0)
+                        ,new CaptureValidator(true))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(0,1),new PathValidator(0,1)
+                        ,new CaptureValidator(true))
+        ));
+        orValidator.add(new CompositeAndValidator(
+                List.of(new UnidirectionalMovementValidator(0,-1),new PathValidator(0,-1))
+        ));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(2,1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(2,-1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-2,1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-2,-1),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(1,2),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(1,-2),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-1,2),new CaptureValidator(true))));
+        orValidator.add(new CompositeAndValidator(List.of(new ComposeMovementValidator(-1,-2),new CaptureValidator(true))));
+        addDefaultAndValidator(andValidator);
+    }
+
 
     private static void addDefaultAndValidator(List<MovementValidator> andValidator){
         andValidator.add(new InBoardValidator());

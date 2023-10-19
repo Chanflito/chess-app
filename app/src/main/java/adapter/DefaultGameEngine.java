@@ -58,4 +58,9 @@ public class DefaultGameEngine implements GameEngine {
                 , boardDirector.createClassicBoard(8, 8)), new ClassicGameMover(),
                 new ClassicTurnHandler(Color.WHITE), new ClassicWinCondition());
     }
+    private static ClassicGameOrganizer createCapablancaGame(BoardDirector boardDirector) {
+        return new ClassicGameOrganizer(new ClassicGame(List.of(new Player(Color.WHITE), new Player(Color.BLACK))
+                , boardDirector.createCapablancaBoard(10, 8)), new ClassicGameMover(),
+                new ClassicTurnHandler(Color.WHITE), new ClassicWinCondition());
+    }
 }
