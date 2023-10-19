@@ -75,7 +75,8 @@ public class MoveDirector {
                 ,new PawnCaptureValidator(false),new QuantityMovementValidator(0))));
         andValidator.add(new InBoardValidator());
         andValidator.add(new CheckValidator());
-        pieceMovers.add(new PromoteMover(List.of(new CaptureValidator(false),new UnidirectionalMovementValidator(direction,0))));
+        pieceMovers.add(new PromoteMover(List.of(new CaptureValidator(false),
+                new UnidirectionalMovementValidator(direction,0),new IncrementValidator(1))));
     }
 
     private void setRooksValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){

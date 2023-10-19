@@ -41,6 +41,7 @@ public class PromoteMover implements PieceMover {
     public Result<Board, Boolean> move(Movement movement, Board board) {
             Board boardClone=board.copy();
             Position initialPosition=movement.getFrom().copy();
+            //Por la UI necesito que tengan el mismo id.
             String id=board.getPieces().get(initialPosition).getId();
             Position finalPosition=movement.getTo().copy();
             Color playerColor=board.getPieces().get(initialPosition).getColor();
