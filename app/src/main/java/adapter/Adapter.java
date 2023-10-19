@@ -52,26 +52,26 @@ public class Adapter {
         return new edu.austral.dissis.chess.gui.Position(position.y()+1, position.x()+1);
     }
 
-    public static edu.austral.dissis.chess.gui.Position convertPositionInCapaBlanca(Position position){
-        int filaMisChess = position.x(); // Fila en "mis chess"
-        int columnaMisChess = position.y(); // Columna en "mis chess"
-
-        // Realiza la conversión
-        int filaChess = 8 - filaMisChess;
-        int columnaChess = 10 - columnaMisChess;
-
-        // Devuelve la nueva posición en "chess"
-        return new edu.austral.dissis.chess.gui.Position(filaChess, columnaChess);
-    }
-
-    public static List<ChessPiece> getCurrentPiecesCapaBlanca(Board board){
-        List<ChessPiece> piecesInAdapter=new ArrayList<>();
-        Map<Position, Piece> boardState=board.getPieces();
-        boardState.forEach((position, piece) -> {
-            ChessPiece chessPiece= new ChessPiece(piece.getId(),
-                    convertPlayerColor(piece.getColor()),convertPositionInCapaBlanca(position),piece.getType().toString().toLowerCase());
-            piecesInAdapter.add(chessPiece);
-        });
-        return piecesInAdapter;
-    }
+//    public static edu.austral.dissis.chess.gui.Position convertPositionInCapaBlanca(Position position){
+//        int filaMisChess = position.x(); // Fila en "mis chess"
+//        int columnaMisChess = position.y(); // Columna en "mis chess"
+//
+//        // Realiza la conversión
+//        int filaChess = 8 - filaMisChess;
+//        int columnaChess = 10 - columnaMisChess;
+//
+//        // Devuelve la nueva posición en "chess"
+//        return new edu.austral.dissis.chess.gui.Position(filaChess, columnaChess);
+//    }
+//
+//    public static List<ChessPiece> getCurrentPiecesCapaBlanca(Board board){
+//        List<ChessPiece> piecesInAdapter=new ArrayList<>();
+//        Map<Position, Piece> boardState=board.getPieces();
+//        boardState.forEach((position, piece) -> {
+//            ChessPiece chessPiece= new ChessPiece(piece.getId(),
+//                    convertPlayerColor(piece.getColor()),convertPositionInCapaBlanca(position),piece.getType().toString().toLowerCase());
+//            piecesInAdapter.add(chessPiece);
+//        });
+//        return piecesInAdapter;
+//    }
 }

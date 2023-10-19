@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+//Implementar esto con una interfaz, como boardcreator con create board.
 public class BoardDirector {
     public Board createClassicBoard(int columns, int rows){
         Map<Position, Piece> position=new HashMap<>();

@@ -43,7 +43,6 @@ public class ClassicGameOrganizer implements GameOrganizer {
 
     @Override
     public Result<Boolean, Color> isGameOver(Movement movement) {
-        //Ver inmutabilidad aca.
         return this.gameOverCondition.evaluateCondition(movement, this);
     }
 
@@ -71,7 +70,8 @@ public class ClassicGameOrganizer implements GameOrganizer {
                     return gameResult.getValue().isEmpty() ?
                             new MoveResult<>(new
                                     ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler.nextTurn(),this.gameOverCondition),null):
-                                    new MoveResult<>(new ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler, this.gameOverCondition),gameResult.getValue().get());
+                                    new MoveResult<>(new ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler, this.gameOverCondition)
+                                            ,gameResult.getValue().get());
 
                 }
                 return new MoveResult<>(this,"It's turn of "+playerColor+" player.");

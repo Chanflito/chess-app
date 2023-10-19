@@ -8,7 +8,7 @@ import validator.interfaces.MovementValidator;
 import validator.interfaces.PieceMover;
 
 import java.util.List;
-
+//MoveHandler le tendria que sacar el and y modificar el nombre.
 public class ClassicMoveHandler implements MoveHandler {
     private final List<MovementValidator> orValidators;
     private final  List<MovementValidator> andValidators;

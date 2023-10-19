@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Piece{
     private final Color color;
     private final PieceType type;
-
+    //la pieza conozca sus reglas,
     private final MoveHandler moveHandler;
 
     private final String id;

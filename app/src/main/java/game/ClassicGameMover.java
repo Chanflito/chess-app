@@ -35,7 +35,7 @@ public class ClassicGameMover implements GameMover {
         return new MoveResult<>(game,"Invalid Movement");
     }
     private Result<Board,Boolean> checkSpecialValidatorsAndAndValidators(Movement movement, Game game,MoveHandler moveHandler){
-        Result<Board,Boolean> result=moveHandler.checkSpecialValidators(movement, game.getBoard());
+        Result<Board,Boolean> result=moveHandler.checkSpecialValidators(movement, game.getBoard().copy());
         if (result.getValue().isPresent()){
             if (result.getValue().get() && moveHandler.checkAndValidators(movement, game.getBoard())){
                 return result;

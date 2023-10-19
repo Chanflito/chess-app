@@ -10,8 +10,6 @@ import piece.Piece;
 import piece.interfaces.MoveHandler;
 import result.MoveResult;
 import result.Result;
-import utils.Finder;
-import validator.UnidirectionalMovementValidator;
 import validator.interfaces.MovementValidator;
 import validator.interfaces.PieceMover;
 

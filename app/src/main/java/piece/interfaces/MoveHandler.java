@@ -9,6 +9,7 @@ public interface MoveHandler {
 
 
     boolean checkOrValidators(Movement movement, Board board);
+    //And validator podria ir afuer, no en la pieza.
 
     boolean checkAndValidators(Movement movement, Board board);
 
