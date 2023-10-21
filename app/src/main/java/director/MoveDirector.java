@@ -1,6 +1,7 @@
 package director;
 
 import enums.Color;
+import enums.Direction;
 import piece.ClassicMoveHandler;
 import piece.interfaces.MoveHandler;
 import piece.mover.PromoteMover;
@@ -261,4 +262,17 @@ public class MoveDirector {
         andValidator.add(new CheckValidator());
     }
 
+    private List<Direction> getPawnDirections(Color color){
+        List<Direction> directions=new ArrayList<>();
+        if (color==Color.WHITE){
+            directions.add(Direction.UP);
+            directions.add(Direction.UP_LEFT);
+            directions.add(Direction.UP_RIGHT);
+        }else{
+            directions.add(Direction.DOWN);
+            directions.add(Direction.DOWN_LEFT);
+            directions.add(Direction.DOWN_RIGHT);
+        }
+        return directions;
+    }
 }
