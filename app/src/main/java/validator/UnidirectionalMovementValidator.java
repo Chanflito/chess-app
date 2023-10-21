@@ -2,6 +2,7 @@ package validator;
 
 import board.Position;
 import board.interfaces.Board;
+import enums.Direction;
 import piece.Movement;
 import validator.interfaces.MovementValidator;
 
@@ -10,9 +11,9 @@ public class UnidirectionalMovementValidator implements MovementValidator {
 
     private final int rows;
 
-    public UnidirectionalMovementValidator(int columns, int rows) {
-        this.columns = columns;
-        this.rows = rows;
+    public UnidirectionalMovementValidator(Direction direction) {
+       this.rows= direction.x();
+       this.columns= direction.y();
     }
 
     @Override

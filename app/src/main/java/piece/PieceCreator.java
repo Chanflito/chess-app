@@ -42,7 +42,7 @@ public class PieceCreator implements PieceBuilder {
         return new PieceCreator(this.color,this.type,this.moveHandler,id);
     }
 
-    public Piece getResult() {
+    public Piece build() {
         return new Piece(this.color, this.type,this.moveHandler, id);
     }
 }

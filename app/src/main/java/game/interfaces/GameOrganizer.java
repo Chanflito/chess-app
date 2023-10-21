@@ -8,8 +8,7 @@ import result.Result;
 public interface GameOrganizer {
 
     Game currentGame();
-
-
+    
     GameMover getGameMover();
     TurnHandler getTurnHandler();
 

@@ -2,7 +2,7 @@ package piece.mover;
 
 import board.Position;
 import board.interfaces.Board;
-import director.MoveDirector;
+import director.MoveHandlerDirector;
 import enums.Color;
 import enums.PieceType;
 import piece.Movement;
@@ -45,8 +45,8 @@ public class PromoteMover implements PieceMover {
             Color playerColor=board.getPieces().get(initialPosition).getColor();
             boardClone.getPieces().remove(initialPosition);
             //Por default es queen.
-            MoveDirector moveDirector=new MoveDirector();
-            MoveHandler moveHandler=moveDirector.createQueenMovement();
+            MoveHandlerDirector moveHandlerDirector =new MoveHandlerDirector();
+            MoveHandler moveHandler= moveHandlerDirector.createQueenMovement();
             Piece piece=new Piece(playerColor, PieceType.QUEEN,moveHandler,id);
             boardClone.getPieces().put(finalPosition,piece);
             return new MoveResult<>(boardClone,true);

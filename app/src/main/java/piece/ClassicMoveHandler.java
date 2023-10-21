@@ -20,7 +20,6 @@ public class ClassicMoveHandler implements MoveHandler {
         this.andValidators = andValidators;
         this.specialValidators = specialValidators;
     }
-
     @Override
     public boolean checkOrValidators(Movement movement, Board board) {
         for (MovementValidator m: orValidators) {

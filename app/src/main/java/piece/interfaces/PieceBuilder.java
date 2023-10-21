@@ -10,5 +10,5 @@ public interface PieceBuilder {
     PieceBuilder movement(MoveHandler moveHandler);
 
     PieceBuilder id(String id);
-    Piece getResult();
+    Piece build();
 }
