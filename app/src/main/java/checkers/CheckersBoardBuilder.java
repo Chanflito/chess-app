@@ -43,32 +43,20 @@ public class CheckersBoardBuilder implements BoardBuilder {
     }
 
 
-    private void assignPawnsIntoBoard(Map<Position, Piece> position,
-                                      CheckersMoveHandlerDirector moveHandlerDirector, PieceDirector director) {
-        position.put(new Position(0, 1), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(1, 0), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(1, 0), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(1, 2), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(3, 2), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(5, 2), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(7, 2), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(2, 1), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(3, 0), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(4, 1), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(5, 0), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(6, 1), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(7, 0), director.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
-        position.put(new Position(1, 7), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(0, 6), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(2, 6), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(1, 5), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(3, 5), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(4, 6), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(3, 7), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(5, 7), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(5, 5), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(6, 6), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(7, 5), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
-        position.put(new Position(7, 7), director.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
+    private void assignPawnsIntoBoard(Map<Position, Piece> pieces,
+                                      CheckersMoveHandlerDirector moveHandlerDirector, PieceDirector pieceDirector) {
+        // Create and place white pawns
+        for (int columns = 0; columns < 3; columns++) {
+            for (int rows = (columns % 2 == 0) ? 1 : 0; rows < this.columns; rows += 2) {
+                pieces.put(new Position(rows,columns), pieceDirector.createPawn(Color.WHITE, moveHandlerDirector.createPawnMovement(Color.WHITE)));
+            }
+        }
+
+        // Create and place black pawns
+        for (int columns = rows - 3; columns < rows; columns++) {
+            for (int rows = (columns % 2 == 0) ? 1 : 0; rows < this.columns; rows += 2) {
+                pieces.put(new Position(rows, columns), pieceDirector.createPawn(Color.BLACK, moveHandlerDirector.createPawnMovement(Color.BLACK)));
+            }
+        }
     }
 }
