@@ -42,8 +42,6 @@ public class CheckersGameOrganizer implements GameOrganizer {
 
     @Override
     public MoveResult<GameOrganizer, String> tryMovement(Movement movement, Game game) {
-        Color currentTurn=this.turnHandler.getCurrentTurn();
-        if (findPiece(movement,game)==null) return new MoveResult<>(this,"There is no piece in that position.");
         return null;
     }
 

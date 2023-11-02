@@ -23,6 +23,7 @@ public class CheckersMoveHandlerDirector {
 
     private void setPawnsValidator(int direction, List<MovementValidator> orValidator,
                                    List<MovementValidator> andValidator, List<PieceMover> pieceMovers) {
+
     }
 
 
