@@ -12,7 +12,7 @@ public interface GameOrganizer {
     GameMover getGameMover();
     TurnHandler getTurnHandler();
 
-    MoveResult<GameOrganizer,String> tryMovement(Movement movement, Game game);
+    MoveResult<GameOrganizer,String> move(Movement movement, Game game);
 
     Result<Boolean,Color> isGameOver(Movement movement);
     GameOrganizer copy();

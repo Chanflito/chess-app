@@ -6,6 +6,7 @@ import chess.piece.Movement;
 import chess.piece.Piece;
 import chess.result.MoveResult;
 import chess.result.Result;
+import org.jetbrains.annotations.NotNull;
 
 public class ClassicGameOrganizer implements GameOrganizer {
 
@@ -57,29 +58,13 @@ public class ClassicGameOrganizer implements GameOrganizer {
     }
 
     @Override
-    public MoveResult<GameOrganizer,String> tryMovement(Movement movement, Game game){
+    public MoveResult<GameOrganizer,String> move(Movement movement, Game game){
         Color playerColor=turnHandler.getCurrentTurn();
-        if (findPiece(movement, game) ==null){
+        if (!existsPiece(movement, game)){
             return new MoveResult<>(this,"There is no piece in that position.");}
 
-        for (Player p: game.getPlayers()) {
-            if (p.getColor().compareTo(playerColor)==0){
-                if (isPlayerColorEqualsPieceColor(movement, game, playerColor)){
-                    Game currentGame=game.copy();
-                    Result<Game,String> gameResult= makeMovement(movement, currentGame);
-                    return gameResult.getValue().isEmpty() ?
-                            new MoveResult<>(new
-                                    ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler.nextTurn(),this.gameOverCondition),null):
-                                    new MoveResult<>(new ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler, this.gameOverCondition)
-                                            ,gameResult.getValue().get());
-
-                }
-                return new MoveResult<>(this,"It's turn of "+playerColor+" player.");
-            }
-        }
-        return new MoveResult<>(this, "Player with color "+playerColor+" doesn't exists.");
+        return checkConditions(movement, game, playerColor);
     }
-
 
 
     private boolean isPlayerColorEqualsPieceColor(Movement movement, Game game, Color playerColor) {
@@ -89,7 +74,50 @@ public class ClassicGameOrganizer implements GameOrganizer {
         return this.getGameMover().movePiece(movement, currentGame);
     }
 
+    private Boolean existsPiece(Movement movement, Game game) {
+        return game.getBoard().getPieces().containsKey(movement.getFrom());
+    }
+
     private Piece findPiece(Movement movement, Game game) {
         return game.getBoard().getPieces().get(movement.getFrom());
+    }
+
+    @NotNull
+    private MoveResult<GameOrganizer, String> checkConditions(Movement movement, Game game, Color playerColor) {
+        for (Player p: game.getPlayers()) {
+            if (p.getColor().compareTo(playerColor)==0){
+                if (isPlayerColorEqualsPieceColor(movement, game, playerColor)){
+                    return evaluateMovement(movement, game);
+
+                }
+                return new MoveResult<>(this, "It's turn of " + playerColor + " player.");
+            }
+        }
+        return new MoveResult<>(this, "Player with color " + playerColor + " doesn't exists.");
+    }
+
+    @NotNull
+    private MoveResult<GameOrganizer, String> evaluateMovement(Movement movement, Game game) {
+        Game currentGame= game.copy();
+        Result<Game,String> gameResult= makeMovement(movement, currentGame);
+        return isLegitMove(gameResult) ?
+                getResultOfLegitMove(gameResult) :
+                getResultOfNotLegitMove(gameResult);
+    }
+
+    @NotNull
+    private MoveResult<GameOrganizer, String> getResultOfNotLegitMove(Result<Game, String> gameResult) {
+        return new MoveResult<>(new ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler, this.gameOverCondition)
+                , gameResult.getValue().get());
+    }
+
+    @NotNull
+    private MoveResult<GameOrganizer, String> getResultOfLegitMove(Result<Game, String> gameResult) {
+        return new MoveResult<>(new
+                ClassicGameOrganizer(gameResult.getKey(), gameMover, turnHandler.nextTurn(), this.gameOverCondition), null);
+    }
+
+    private boolean isLegitMove(Result<Game, String> gameResult) {
+        return gameResult.getValue().isEmpty();
     }
 }

@@ -20,7 +20,7 @@ public class CheckersGameEngine implements GameEngine {
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-        Result<GameOrganizer,String> tryMovement= previousGameOrganizers.peek().tryMovement(Adapter.convertMove(move)
+        Result<GameOrganizer,String> tryMovement= previousGameOrganizers.peek().move(Adapter.convertMove(move)
                 , previousGameOrganizers.peek().currentGame());
         if (tryMovement.getValue().isPresent()){
             return new InvalidMove(tryMovement.getValue().get());

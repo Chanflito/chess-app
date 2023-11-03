@@ -41,7 +41,7 @@ public class CheckersGameOrganizer implements GameOrganizer {
     }
 
     @Override
-    public MoveResult<GameOrganizer, String> tryMovement(Movement movement, Game game) {
+    public MoveResult<GameOrganizer, String> move(Movement movement, Game game) {
         return null;
     }
 
