@@ -1,12 +1,14 @@
 package chess.board;
 
+import common.board.RectangularBoard;
 import common.board.interfaces.Board;
 import common.board.interfaces.BoardBuilder;
 import chess.director.MoveHandlerDirector;
-import chess.director.PieceDirector;
+import common.game.PieceDirector;
 import common.enums.Color;
-import chess.piece.Piece;
+import common.game.Piece;
 import chess.piece.PieceCreator;
+import common.game.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;

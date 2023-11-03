@@ -2,8 +2,8 @@ package chess.game;
 
 import common.enums.Color;
 import common.game.interfaces.*;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.move.Movement;
+import common.game.Piece;
 import chess.result.MoveResult;
 import chess.result.Result;
 import org.jetbrains.annotations.NotNull;
@@ -50,11 +50,6 @@ public class ClassicGameOrganizer implements GameOrganizer {
     @Override
     public GameOrganizer copy() {
         return new ClassicGameOrganizer(game.copy(),this.gameMover,turnHandler.nextTurn(),this.gameOverCondition);
-    }
-
-    @Override
-    public GameOverCondition getGameOverCondition() {
-        return this.gameOverCondition;
     }
 
     @Override

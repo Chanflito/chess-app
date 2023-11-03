@@ -1,9 +1,9 @@
 package checkers;
 
-import chess.board.Position;
-import chess.piece.Movement;
-import chess.piece.Piece;
-import chess.piece.interfaces.MoveHandler;
+import common.game.Position;
+import common.move.Movement;
+import common.game.Piece;
+import common.move.MoveHandler;
 import chess.result.Result;
 import common.board.interfaces.Board;
 import common.game.interfaces.Game;

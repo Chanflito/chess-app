@@ -1,6 +1,6 @@
 package checkers;
 
-import chess.adapter.Adapter;
+import common.adapter.Adapter;
 import chess.result.Result;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;

@@ -2,7 +2,7 @@ package common.game.interfaces;
 
 
 import common.enums.Color;
-import chess.piece.Movement;
+import common.move.Movement;
 import chess.result.Result;
 
 public interface GameOverCondition {

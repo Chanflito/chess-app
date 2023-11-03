@@ -1,13 +1,13 @@
 package chess.game;
 
-import chess.board.Position;
+import common.game.Position;
 import common.board.interfaces.Board;
 import common.game.interfaces.GameOverCondition;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
 import org.jetbrains.annotations.Nullable;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.move.Movement;
+import common.game.Piece;
 import chess.result.Result;
 import chess.result.WinResult;
 
@@ -46,7 +46,7 @@ public class ClassicWinCondition implements GameOverCondition {
                     //Pruebo todos los casos posibles de movimiento del oponente.
                     Movement move= new Movement(position,new Position(i,j));
                     Piece piece= currentBoard.getPieces().get(position);
-                    if (checkMovementsOfEnemy(currentBoard, move, piece)){
+                    if (checkMovementsOfEnemy(currentBoard, move, piece).getValue().get()){
                         //Si alguno de los movimientos del oponente es valido, entonces no hay jaque mate.
                         return new WinResult(false, null);
                     }
@@ -56,9 +56,8 @@ public class ClassicWinCondition implements GameOverCondition {
         return null;
     }
 
-    private boolean checkMovementsOfEnemy(Board currentBoard, Movement move, Piece piece) {
-        return piece.getMoveHandler().checkAndValidators(move, currentBoard)
-                && piece.getMoveHandler().checkOrValidators(move, currentBoard);
+    private Result<Board, Boolean> checkMovementsOfEnemy(Board currentBoard, Movement move, Piece piece) {
+        return piece.getMoveHandler().handleMove(move,currentBoard);
     }
 
     private boolean checkIfOwnMovementIsValid(GameOrganizer gameOrganizer, Movement movementOfCurrentPlayer) {

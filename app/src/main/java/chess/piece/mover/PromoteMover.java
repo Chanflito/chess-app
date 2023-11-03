@@ -1,32 +1,30 @@
 package chess.piece.mover;
 
-import chess.board.Position;
+import common.game.Position;
 import common.board.interfaces.Board;
 import chess.director.MoveHandlerDirector;
 import common.enums.Color;
-import common.enums.PieceType;
+import chess.piece.PieceType;
 import chess.result.MoveResult;
 import chess.result.Result;
 import common.validator.interfaces.MovementValidator;
 import common.validator.interfaces.PieceMover;
-import chess.piece.Movement;
-import chess.piece.Piece;
-import chess.piece.interfaces.MoveHandler;
+import common.move.Movement;
+import common.game.Piece;
+import common.move.MoveHandler;
 
 import java.util.List;
 
 public class PromoteMover implements PieceMover {
-    private final List<MovementValidator> movementValidators;
+    private final MovementValidator movementValidator;
 
-    public PromoteMover(List<MovementValidator> movementValidators) {
-        this.movementValidators = movementValidators;
+    public PromoteMover(MovementValidator movementValidator) {
+        this.movementValidator = movementValidator;
     }
 
     @Override
     public boolean isValid(Movement movement, Board board) {
-        for (MovementValidator m: movementValidators){
-            if (!m.isValid(movement,board)) return false;
-        }
+        if (!movementValidator.isValid(movement,board)) return false;
         Piece piece=board.getPieces().get(movement.getFrom());
         Board boardClone=board.copy();
         boardClone.getPieces().remove(movement.getFrom().copy());
@@ -37,6 +35,7 @@ public class PromoteMover implements PieceMover {
 
     @Override
     public Result<Board, Boolean> move(Movement movement, Board board) {
+            if (!isValid(movement,board)) return new MoveResult<>(board,false);
             Board boardClone=board.copy();
             Position initialPosition=movement.getFrom().copy();
             //Por la UI necesito que tengan el mismo id.

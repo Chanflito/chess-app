@@ -1,9 +1,9 @@
 package chess.validator;
 
-import chess.board.Position;
+import common.game.Position;
 import common.board.interfaces.Board;
 import common.enums.Direction;
-import chess.piece.Movement;
+import common.move.Movement;
 import common.validator.interfaces.MovementValidator;
 
 public class UnidirectionalMovementValidator implements MovementValidator {

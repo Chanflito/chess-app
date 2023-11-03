@@ -1,8 +1,8 @@
 package chess.validator;
 
 import common.board.interfaces.Board;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.move.Movement;
+import common.game.Piece;
 import common.validator.interfaces.MovementValidator;
 
 public class CaptureValidator implements MovementValidator {

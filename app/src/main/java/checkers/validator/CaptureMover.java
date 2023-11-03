@@ -1,8 +1,8 @@
 package checkers.validator;
 
-import chess.board.Position;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.game.Position;
+import common.move.Movement;
+import common.game.Piece;
 import chess.result.Result;
 import common.board.interfaces.Board;
 import common.enums.Color;

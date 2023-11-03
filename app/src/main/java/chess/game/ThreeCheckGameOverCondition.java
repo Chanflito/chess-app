@@ -3,7 +3,7 @@ package chess.game;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
 import common.game.interfaces.GameOverCondition;
-import chess.piece.Movement;
+import common.move.Movement;
 import chess.result.Result;
 
 

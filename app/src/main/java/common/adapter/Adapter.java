@@ -1,6 +1,6 @@
-package chess.adapter;
+package common.adapter;
 
-import chess.board.Position;
+import common.game.Position;
 import common.board.interfaces.Board;
 import edu.austral.dissis.chess.gui.BoardSize;
 import edu.austral.dissis.chess.gui.ChessPiece;
@@ -8,8 +8,8 @@ import edu.austral.dissis.chess.gui.Move;
 import edu.austral.dissis.chess.gui.PlayerColor;
 import common.enums.Color;
 import common.game.interfaces.TurnHandler;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.move.Movement;
+import common.game.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

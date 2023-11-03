@@ -1,6 +1,6 @@
 package common.game.interfaces;
 
-import chess.piece.Movement;
+import common.move.Movement;
 import chess.result.Result;
 
 public interface GameMover {

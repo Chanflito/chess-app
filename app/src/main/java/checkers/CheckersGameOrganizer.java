@@ -1,7 +1,7 @@
 package checkers;
 
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.move.Movement;
+import common.game.Piece;
 import chess.result.MoveResult;
 import chess.result.Result;
 import common.enums.Color;
@@ -55,10 +55,6 @@ public class CheckersGameOrganizer implements GameOrganizer {
         return null;
     }
 
-    @Override
-    public GameOverCondition getGameOverCondition() {
-        return this.gameOverCondition;
-    }
 
     private Piece findPiece(Movement movement, Game game) {
         return game.getBoard().getPieces().get(movement.getFrom());

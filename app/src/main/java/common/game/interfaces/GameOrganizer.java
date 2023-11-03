@@ -2,7 +2,7 @@ package common.game.interfaces;
 
 
 import common.enums.Color;
-import chess.piece.Movement;
+import common.move.Movement;
 import chess.result.MoveResult;
 import chess.result.Result;
 public interface GameOrganizer {
@@ -16,6 +16,4 @@ public interface GameOrganizer {
 
     Result<Boolean,Color> isGameOver(Movement movement);
     GameOrganizer copy();
-
-    GameOverCondition getGameOverCondition();
 }

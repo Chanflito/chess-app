@@ -1,9 +1,9 @@
 package chess.validator;
 
-import chess.board.Position;
+import common.game.Position;
 import common.board.interfaces.Board;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import common.move.Movement;
+import common.game.Piece;
 import common.validator.interfaces.MovementValidator;
 
 import java.util.List;

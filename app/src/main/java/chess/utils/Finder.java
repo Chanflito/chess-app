@@ -1,8 +1,8 @@
 package chess.utils;
 
-import chess.board.Position;
+import common.game.Position;
 import common.board.interfaces.Board;
-import chess.piece.Piece;
+import common.game.Piece;
 
 import java.util.Map;
 

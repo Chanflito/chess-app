@@ -1,7 +1,7 @@
 package chess.validator;
 
 import common.board.interfaces.Board;
-import chess.piece.Movement;
+import common.move.Movement;
 import common.validator.interfaces.MovementValidator;
 
 public class IncrementValidator implements MovementValidator {

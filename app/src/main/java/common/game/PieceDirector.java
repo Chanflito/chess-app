@@ -1,9 +1,8 @@
-package chess.director;
+package common.game;
 
 import common.enums.Color;
-import common.enums.PieceType;
-import chess.piece.Piece;
-import chess.piece.interfaces.MoveHandler;
+import chess.piece.PieceType;
+import common.move.MoveHandler;
 import chess.piece.interfaces.PieceBuilder;
 
 public class PieceDirector {

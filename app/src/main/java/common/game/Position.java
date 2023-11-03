@@ -1,4 +1,4 @@
-package chess.board;
+package common.game;
 
 public record Position(int x, int y) {
     @Override

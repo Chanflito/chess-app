@@ -1,11 +1,12 @@
 package chess.validator;
 
-import chess.board.Position;
+import chess.result.Result;
+import common.game.Position;
 import common.board.interfaces.Board;
 import common.enums.Color;
-import common.enums.PieceType;
-import chess.piece.Movement;
-import chess.piece.Piece;
+import chess.piece.PieceType;
+import common.move.Movement;
+import common.game.Piece;
 import common.validator.interfaces.MovementValidator;
 
 import java.util.Map;
@@ -61,15 +62,15 @@ public class CheckValidator implements MovementValidator {
         boardClone.getPieces().put(movement.getTo(),piece);
         boardClone.getPieces().remove(movement.getFrom(),piece);
         Position position= movement.getFrom().equals(kingPosition) ? movement.getTo().copy() : kingPosition.copy();
-        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position)){
+        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position).getValue().get()){
             if (checkIfEnemyCanCapture(boardClone,
-                    enemyPosition,enemyPiece,position)) return true;
+                    enemyPosition,enemyPiece,position).getValue().get()) return true;
         }
         if (checkIfEnemyCanCapture(boardClone,
-                enemyPosition,enemyPiece,position)) return true;
-        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position)){
+                enemyPosition,enemyPiece,position).getValue().get()) return true;
+        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position).getValue().get()){
             if (checkIfEnemyCanCapture(boardClone,
-                    enemyPosition,enemyPiece,position)) {
+                    enemyPosition,enemyPiece,position).getValue().get()) {
                 return checkMovementToEnemy(enemyPosition, movement);
             }
         }
@@ -82,7 +83,7 @@ public class CheckValidator implements MovementValidator {
     }
 
 
-    private boolean checkIfEnemyCanCapture(Board board, Position enemyPosition, Piece enemyPiece, Position position) {
-        return enemyPiece.getMoveHandler().checkOrValidators(new Movement(enemyPosition, position), board);
+    private Result<Board, Boolean> checkIfEnemyCanCapture(Board board, Position enemyPosition, Piece enemyPiece, Position position) {
+        return enemyPiece.getMoveHandler().handleMove(new Movement(enemyPosition, position), board);
     }
 }

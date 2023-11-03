@@ -1,5 +1,6 @@
-package chess.adapter;
+package common.engine;
 
+import common.adapter.Adapter;
 import chess.game.GameOrganizerBuilder;
 import edu.austral.dissis.chess.gui.*;
 import common.enums.Color;

@@ -1,6 +1,6 @@
-package chess.piece;
+package common.move;
 
-import chess.board.Position;
+import common.game.Position;
 
 public class Movement {
     private final Position from;

@@ -1,9 +1,11 @@
 package chess.director;
 
+import chess.piece.mover.CompositeMover;
+import chess.piece.mover.DefaultMover;
 import common.enums.Color;
 import common.enums.Direction;
 import chess.piece.ClassicMoveHandler;
-import chess.piece.interfaces.MoveHandler;
+import common.move.MoveHandler;
 import chess.piece.mover.PromoteMover;
 import chess.validator.*;
 import common.validator.interfaces.MovementValidator;
@@ -15,74 +17,87 @@ import java.util.List;
 public class MoveHandlerDirector {
     public MoveHandler createPawnMovement(Color color){
         int direction= color==Color.WHITE?1:-1;
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setPawnsValidator(direction, orValidator, andValidator,pieceMovers);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setPawnsValidator(direction,orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        PieceMover promoteMover=createPromotion(direction);
+        return new ClassicMoveHandler(new CompositeMover(List.of(promoteMover,defaultMover)));
     }
 
 
     public MoveHandler createRookMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setRooksValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setRooksValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
     public MoveHandler createBishopMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setBishopValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setBishopValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
 
     public MoveHandler createQueenMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setQueenValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setQueenValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
 
     public MoveHandler createKnightMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setKnightValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setKnightValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
 
     public MoveHandler createKingMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setKingValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setKingValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
 
     public MoveHandler createArchBishopMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-        setBishopValidator(orValidator,andValidator);
-        setKnightValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setArchBishopValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
 
     public MoveHandler createChancellorMovement(){
-        List<MovementValidator> orValidator=new ArrayList<>();
-        List<MovementValidator> andValidator=new ArrayList<>();
-        List<PieceMover> pieceMovers=new ArrayList<>();
-
-        setRooksValidator(orValidator,andValidator);
-        setKnightValidator(orValidator,andValidator);
-        return new ClassicMoveHandler(orValidator,andValidator,pieceMovers);
+        List<MovementValidator> orValidators=new ArrayList<>();
+        CompositeOrValidator orValidator=new CompositeOrValidator(orValidators);
+        List<MovementValidator> norValidators=new ArrayList<>();
+        CompositeNorValidator andValidator=new CompositeNorValidator(norValidators);
+        setChancellorValidator(orValidators,norValidators);
+        DefaultMover defaultMover= new DefaultMover(orValidator,andValidator);
+        return new ClassicMoveHandler(new CompositeMover(List.of(defaultMover)));
     }
     private void setPawnsValidator(int direction,
-                                          List<MovementValidator> orValidator, List<MovementValidator> andValidator,
-                                   List<PieceMover> pieceMovers) {
+                                          List<MovementValidator> orValidator, List<MovementValidator> andValidator) {
         List<Direction> getPawnsDirections=getPawnDirections(direction==1?Color.WHITE:Color.BLACK);
         orValidator.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(getPawnsDirections.get(0)),new IncrementValidator(1),
@@ -96,8 +111,6 @@ public class MoveHandlerDirector {
                 ,new PawnCaptureValidator(false),new QuantityMovementValidator(0))));
         andValidator.add(new InBoardValidator());
         andValidator.add(new CheckValidator());
-        pieceMovers.add(new PromoteMover(List.of(new CaptureValidator(false),
-                new UnidirectionalMovementValidator(getPawnsDirections.get(0)),new IncrementValidator(1))));
     }
 
     private void setRooksValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
@@ -278,5 +291,13 @@ public class MoveHandlerDirector {
             directions.add(Direction.DOWN_RIGHT);
         }
         return directions;
+    }
+
+    private PromoteMover createPromotion(int direction){
+        CompositeAndValidator promotionRules=new CompositeAndValidator((List.of(new CaptureValidator(false),
+                new UnidirectionalMovementValidator(getPawnDirections(direction==1?Color.WHITE:Color.BLACK).get(0)),
+                new IncrementValidator(1))));
+        CompositeNorValidator defaultRules=new CompositeNorValidator((List.of(new InBoardValidator(),new CheckValidator())));
+        return new PromoteMover(new CompositeValidator(promotionRules,defaultRules));
     }
 }

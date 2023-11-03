@@ -1,5 +1,6 @@
 package checkers;
 
+
 import chess.game.*;
 import common.board.interfaces.BoardBuilder;
 import common.enums.Color;

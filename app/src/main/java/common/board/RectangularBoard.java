@@ -1,7 +1,8 @@
-package chess.board;
+package common.board;
 
+import common.game.Position;
 import common.board.interfaces.Board;
-import chess.piece.Piece;
+import common.game.Piece;
 
 import java.util.*;
 
