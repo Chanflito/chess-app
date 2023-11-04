@@ -1,8 +1,8 @@
 package common.engine;
 
-import checkers.CheckersGameOrganizerBuilder;
 import common.adapter.Adapter;
 import chess.game.GameOrganizerBuilder;
+import common.result.InvalidMoveResult;
 import edu.austral.dissis.chess.gui.*;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
@@ -17,26 +17,26 @@ public class DefaultGameEngine implements GameEngine {
     private final GameOrganizer gameOrganizer;
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
-        this.gameOrganizer = CheckersGameOrganizerBuilder.createCheckersGame();
+        this.gameOrganizer = GameOrganizerBuilder.createClassicGame();
         previousGameOrganizers.push(gameOrganizer);
     }
 
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-            Result<GameOrganizer,String> tryMovement= previousGameOrganizers.peek().move(Adapter.convertMove(move)
+            Result<?,?> tryMovement= previousGameOrganizers.peek().move(Adapter.convertMove(move)
                     , previousGameOrganizers.peek().currentGame());
-            if (tryMovement.getValue().isPresent()){
-                return new InvalidMove(tryMovement.getValue().get());
+            if (tryMovement instanceof InvalidMoveResult){
+                return new InvalidMove((String) tryMovement.getValue().get());
             }
-            Result<Boolean,Color> isWinner= previousGameOrganizers.peek().isGameOver(Adapter.convertMove(move));
-            if (isWinner.getKey()){
-                return new GameOver(Adapter.getWinner(isWinner.getValue().get()));
+            if (tryMovement instanceof common.result.WinResult){
+                return new GameOver(Adapter.getWinner((Color) tryMovement.getValue().get()));
             }
+            GameOrganizer newGameOrganizer= (GameOrganizer) tryMovement.getKey();
             previousGameOrganizers.pop();
-            previousGameOrganizers.push(tryMovement.getKey());
-            return new NewGameState(Adapter.getCurrentPieces(tryMovement.getKey().currentGame().getBoard())
-                    ,Adapter.getCurrentTurn(tryMovement.getKey().getTurnHandler()));
+            previousGameOrganizers.push(newGameOrganizer);
+            return new NewGameState(Adapter.getCurrentPieces(newGameOrganizer.currentGame().getBoard())
+                    ,Adapter.getCurrentTurn(newGameOrganizer.getTurnHandler()));
     }
 
     @NotNull

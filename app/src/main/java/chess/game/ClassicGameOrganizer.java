@@ -4,9 +4,13 @@ import common.enums.Color;
 import common.game.interfaces.*;
 import common.move.Movement;
 import common.game.Piece;
+import common.result.InvalidMoveResult;
 import common.result.MoveResult;
 import common.result.Result;
+import common.result.WinResult;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 public class ClassicGameOrganizer implements GameOrganizer {
 
@@ -53,12 +57,19 @@ public class ClassicGameOrganizer implements GameOrganizer {
     }
 
     @Override
-    public MoveResult<GameOrganizer,String> move(Movement movement, Game game){
+    public Result<?,?> move(Movement movement, Game game){
         Color playerColor=turnHandler.getCurrentTurn();
         if (!existsPiece(movement, game)){
-            return new MoveResult<>(this,"There is no piece in that position.");}
-
-        return checkConditions(movement, game, playerColor);
+            return new InvalidMoveResult(true,"There is no piece in that position.");}
+        Result<Boolean,Color> isWinner= isGameOver(movement);
+        if (isWinner.getKey()){
+            return new WinResult(true, isWinner.getValue().get());
+        }
+        MoveResult<GameOrganizer,String> moveResult= checkConditions(movement, game, playerColor);
+        if (moveResult.getValue().isPresent()){
+            return new InvalidMoveResult(true, moveResult.getValue().get());
+        }
+        return new MoveResult<>(moveResult.getKey(), Optional.empty());
     }
 
 
