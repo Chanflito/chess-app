@@ -1,7 +1,6 @@
 package common.engine;
 
-import checkers.CheckersGameOrganizer;
-import checkers.CheckersGameOrganizerBuilder;
+import checkers.game.CheckersGameOrganizerBuilder;
 import common.adapter.Adapter;
 import common.result.InvalidMoveResult;
 import edu.austral.dissis.chess.gui.*;

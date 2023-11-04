@@ -1,4 +1,4 @@
-package checkers;
+package checkers.director;
 
 
 import checkers.mover.CaptureMover;

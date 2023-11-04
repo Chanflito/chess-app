@@ -1,5 +1,6 @@
-package checkers;
+package checkers.board;
 
+import checkers.director.CheckersMoveHandlerDirector;
 import common.game.Position;
 import common.board.RectangularBoard;
 import common.game.PieceDirector;

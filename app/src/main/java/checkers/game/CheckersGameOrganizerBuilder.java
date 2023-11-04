@@ -1,6 +1,7 @@
-package checkers;
+package checkers.game;
 
 
+import checkers.board.CheckersBoardBuilder;
 import common.wincondition.AllEnemyPiecesCaptureCondition;
 
 import common.game.ClassicGame;

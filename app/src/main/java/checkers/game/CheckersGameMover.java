@@ -1,4 +1,4 @@
-package checkers;
+package checkers.game;
 
 import common.game.ClassicGame;
 import common.game.Position;

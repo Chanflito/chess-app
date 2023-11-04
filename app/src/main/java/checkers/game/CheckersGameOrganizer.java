@@ -1,4 +1,4 @@
-package checkers;
+package checkers.game;
 
 import checkers.helper.TurnHelper;
 import common.game.Player;
