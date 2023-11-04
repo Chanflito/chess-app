@@ -12,8 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import common.result.Result;
 
 import java.util.Stack;
-//Implementar una condicion de victoria nueva, haciendo un composicion.
-//Hacerlo con horizontal y vertical, diagonal etc.
 public class DefaultGameEngine implements GameEngine {
 
     private final GameOrganizer gameOrganizer;

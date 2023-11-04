@@ -55,9 +55,9 @@ public class CheckersGameOrganizer implements GameOrganizer {
         if (!existsPiece(movement, game)){
             return new InvalidMoveResult(true,"There is no piece in that position.");}
         Result<Boolean,Color> isWinner= isGameOver(movement);
-//        if (isWinner.getKey()){ TODO
-//            return new WinResult(true, isWinner.getValue().get());
-//        }
+        if (isWinner.getKey()){
+            return new WinResult(true, isWinner.getValue().get());
+        }
         MoveResult<GameOrganizer,String> moveResult= checkConditions(movement, game, playerColor);
         if (moveResult.getValue().isPresent()){
             return new InvalidMoveResult(true, moveResult.getValue().get());
@@ -67,7 +67,7 @@ public class CheckersGameOrganizer implements GameOrganizer {
 
     @Override
     public Result<Boolean, Color> isGameOver(Movement movement) {
-        return null;
+        return gameOverCondition.evaluateCondition(movement, this);
     }
 
     @Override

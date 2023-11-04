@@ -1,5 +1,8 @@
 package chess.director;
 
+import chess.piece.PieceCreator;
+import chess.piece.PieceType;
+import chess.piece.interfaces.PieceBuilder;
 import chess.piece.mover.CompositeMover;
 import chess.piece.mover.DefaultMover;
 import common.enums.Color;
@@ -298,6 +301,7 @@ public class MoveHandlerDirector {
                 new UnidirectionalMovementValidator(getPawnDirections(direction==1?Color.WHITE:Color.BLACK).get(0)),
                 new IncrementValidator(1))));
         CompositeNorValidator defaultRules=new CompositeNorValidator((List.of(new InBoardValidator(),new CheckValidator())));
-        return new PromoteMover(new CompositeValidator(promotionRules,defaultRules));
+        PieceBuilder prePiece=new PieceCreator().type(PieceType.QUEEN).movement(createQueenMovement());
+        return new PromoteMover(new CompositeValidator(promotionRules,defaultRules),prePiece);
     }
 }

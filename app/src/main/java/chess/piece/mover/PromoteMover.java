@@ -1,5 +1,6 @@
 package chess.piece.mover;
 
+import chess.piece.interfaces.PieceBuilder;
 import common.game.Position;
 import common.board.interfaces.Board;
 import chess.director.MoveHandlerDirector;
@@ -15,9 +16,11 @@ import common.move.MoveHandler;
 
 public class PromoteMover implements PieceMover {
     private final MovementValidator movementValidator;
-
-    public PromoteMover(MovementValidator movementValidator) {
+    private final PieceBuilder pieceBuilder;
+    //Should be pre created with movehandler,piecetype.
+    public PromoteMover(MovementValidator movementValidator, PieceBuilder pieceBuilder) {
         this.movementValidator = movementValidator;
+        this.pieceBuilder=pieceBuilder;
     }
 
     @Override
@@ -42,9 +45,7 @@ public class PromoteMover implements PieceMover {
             Color playerColor=board.getPieces().get(initialPosition).getColor();
             boardClone.getPieces().remove(initialPosition);
             //Por default es queen.
-            MoveHandlerDirector moveHandlerDirector =new MoveHandlerDirector();
-            MoveHandler moveHandler= moveHandlerDirector.createQueenMovement();
-            Piece piece=new Piece(playerColor, PieceType.QUEEN,moveHandler,id);
+            Piece piece=pieceBuilder.id(id).color(playerColor).build();
             boardClone.getPieces().put(finalPosition,piece);
             return new MoveResult<>(boardClone,true);
     }

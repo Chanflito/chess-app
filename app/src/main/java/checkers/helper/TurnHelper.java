@@ -46,7 +46,7 @@ public class TurnHelper {
        Position positionClone=position.copy();
        for (Position p:directions){
            Position evaluate=new Position(positionClone.x()+p.x(),positionClone.y()+p.y());
-           if (!board.getPieces().containsKey(evaluate)){
+           if (!board.getPieces().containsKey(evaluate) && isNotOutOfBounds(evaluate,board)){
                Position middlePosition= new Position((evaluate.x()+positionClone.x())/2,(evaluate.y()+ positionClone.y())/2);
                if (isEnemyPiece(middlePosition,board)) return true;
            }
@@ -60,5 +60,8 @@ public class TurnHelper {
 
     private boolean isEnemyPiece(Position position, Board board){
         return board.getPieces().containsKey(position) && board.getPieces().get(position).getColor()!=board.getPieces().get(this.position).getColor();
+    }
+    private boolean isNotOutOfBounds(Position position, Board board){
+        return position.x()>=0 && position.x()<board.getSizeOfRows() && position.y()>=0 && position.y()<board.getSizeOfRows();
     }
 }
