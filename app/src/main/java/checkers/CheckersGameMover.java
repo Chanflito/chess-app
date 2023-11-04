@@ -23,25 +23,17 @@ public class CheckersGameMover implements GameMover {
         Optional<Boolean> success=result.getValue();
         if (success.isPresent() && success.get()){
             Board resultBoard=result.getKey().copy();
-            resultBoard.getHistory().add(boardClone.getPieces());
-
+            resultBoard.getHistory().add(result.getKey().getPieces());
             return new MoveResult<>(new ClassicGame(game.getPlayers(),resultBoard),null);
         }
         return new MoveResult<>(game.copy(),"Invalid Movement");
     }
 
-//    private Map<Position, Piece> getPreviousBoard(Board boardClone) {
-//        return boardClone.getHistory().get(boardClone.getHistory().size() - 2);
-//    }
 
     private Piece getPieceInPosition(Board board, Position position){
         return board.getPieces().get(position);
     }
 
-
-//    private boolean wasCapture(Map<Position,Piece> previousBoard, Board currentBoard){
-//        return previousBoard.size()!=currentBoard.getPieces().size();
-//    }
 
 }
 

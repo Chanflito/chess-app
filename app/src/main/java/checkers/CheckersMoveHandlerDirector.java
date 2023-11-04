@@ -3,6 +3,7 @@ package checkers;
 
 import checkers.mover.CaptureMover;
 import checkers.validator.CanCaptureValidator;
+import checkers.validator.PieceCountValidator;
 import checkers.validator.PreviousCaptureValidator;
 import chess.piece.ClassicMoveHandler;
 import chess.piece.mover.CompositeMover;
@@ -38,12 +39,12 @@ public class CheckersMoveHandlerDirector {
     private void setPawnsValidator(Color color, List<MovementValidator> orValidator,
                                    List<MovementValidator> andValidator) {
         List<Direction> directions=getPawnDirections(color);
-        orValidator.add(new CompositeAndValidator(
+        orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(0)),new PathValidator(directions.get(0)),
-                        new CaptureValidator(false),new IncrementValidator(1))));
-        orValidator.add(new CompositeAndValidator(
+                        new CaptureValidator(false),new IncrementValidator(1)))));
+        orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(1)),new PathValidator(directions.get(1)),
-                        new CaptureValidator(false),new IncrementValidator(1))));
+                        new CaptureValidator(false),new IncrementValidator(1)))));
         addDefaultAndValidator(andValidator);
     }
 
@@ -55,7 +56,7 @@ public class CheckersMoveHandlerDirector {
 
     private CaptureMover createFirstCaptureMover(Color color){
         List<Position> directions=getPawnsDirectionToCapture(color);
-        return new CaptureMover((List.of(new CanCaptureValidator(directions))));
+        return new CaptureMover(List.of(new CompositeXorValidator(new PreviousCaptureValidator(),new CanCaptureValidator(directions))));
     }
     private List<Direction> getPawnDirections(Color color){
         List<Direction> directions=new ArrayList<>();

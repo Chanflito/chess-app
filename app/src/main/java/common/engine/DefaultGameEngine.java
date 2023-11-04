@@ -1,5 +1,7 @@
 package common.engine;
 
+import checkers.CheckersGameOrganizer;
+import checkers.CheckersGameOrganizerBuilder;
 import common.adapter.Adapter;
 import chess.game.GameOrganizerBuilder;
 import common.result.InvalidMoveResult;
@@ -17,7 +19,7 @@ public class DefaultGameEngine implements GameEngine {
     private final GameOrganizer gameOrganizer;
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
-        this.gameOrganizer = GameOrganizerBuilder.createClassicGame();
+        this.gameOrganizer = CheckersGameOrganizerBuilder.createCheckersGame();
         previousGameOrganizers.push(gameOrganizer);
     }
 
