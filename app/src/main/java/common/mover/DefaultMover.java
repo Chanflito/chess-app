@@ -1,4 +1,4 @@
-package chess.piece.mover;
+package common.mover;
 
 import common.result.MoveResult;
 import common.result.Result;

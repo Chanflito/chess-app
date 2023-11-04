@@ -1,4 +1,4 @@
-package chess.game;
+package common.game;
 
 import common.enums.Color;
 

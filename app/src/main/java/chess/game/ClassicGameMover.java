@@ -1,5 +1,6 @@
 package chess.game;
 
+import common.game.ClassicGame;
 import common.game.Position;
 import common.board.interfaces.Board;
 import common.game.interfaces.Game;

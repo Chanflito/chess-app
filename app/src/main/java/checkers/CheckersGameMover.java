@@ -1,6 +1,6 @@
 package checkers;
 
-import chess.game.ClassicGame;
+import common.game.ClassicGame;
 import common.game.Position;
 import common.move.Movement;
 import common.game.Piece;

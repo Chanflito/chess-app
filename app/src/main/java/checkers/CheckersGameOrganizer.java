@@ -1,8 +1,7 @@
 package checkers;
 
 import checkers.helper.TurnHelper;
-import chess.game.ClassicGameOrganizer;
-import chess.game.Player;
+import common.game.Player;
 import common.game.Position;
 import common.move.Movement;
 import common.game.Piece;

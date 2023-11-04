@@ -1,18 +1,15 @@
-package chess.piece.mover;
+package common.mover;
 
-import chess.piece.interfaces.PieceBuilder;
+import common.piece.PieceBuilder;
 import common.game.Position;
 import common.board.interfaces.Board;
-import chess.director.MoveHandlerDirector;
 import common.enums.Color;
-import chess.piece.PieceType;
 import common.result.MoveResult;
 import common.result.Result;
 import common.validator.interfaces.MovementValidator;
 import common.validator.interfaces.PieceMover;
 import common.move.Movement;
 import common.game.Piece;
-import common.move.MoveHandler;
 
 public class PromoteMover implements PieceMover {
     private final MovementValidator movementValidator;

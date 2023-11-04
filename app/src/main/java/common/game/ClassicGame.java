@@ -1,4 +1,4 @@
-package chess.game;
+package common.game;
 
 import common.board.interfaces.Board;
 import common.game.interfaces.Game;

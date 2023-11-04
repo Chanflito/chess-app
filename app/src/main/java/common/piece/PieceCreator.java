@@ -1,7 +1,7 @@
-package chess.piece;
+package common.piece;
 
 import common.enums.Color;
-import chess.piece.interfaces.PieceBuilder;
+import common.enums.PieceType;
 import common.move.MoveHandler;
 import common.game.Piece;
 

@@ -4,7 +4,7 @@ import common.result.Result;
 import common.game.Position;
 import common.board.interfaces.Board;
 import common.enums.Color;
-import chess.piece.PieceType;
+import common.enums.PieceType;
 import common.move.Movement;
 import common.game.Piece;
 import common.validator.interfaces.MovementValidator;

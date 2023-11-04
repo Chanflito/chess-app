@@ -1,18 +1,19 @@
 package chess.director;
 
-import chess.piece.PieceCreator;
-import chess.piece.PieceType;
-import chess.piece.interfaces.PieceBuilder;
-import chess.piece.mover.CompositeMover;
-import chess.piece.mover.DefaultMover;
+import common.piece.PieceCreator;
+import common.enums.PieceType;
+import common.piece.PieceBuilder;
+import common.mover.CompositeMover;
+import common.mover.DefaultMover;
 import common.enums.Color;
 import common.enums.Direction;
-import chess.piece.ClassicMoveHandler;
+import common.piece.ClassicMoveHandler;
 import common.move.MoveHandler;
-import chess.piece.mover.PromoteMover;
+import common.mover.PromoteMover;
 import chess.validator.*;
 import common.validator.interfaces.MovementValidator;
 import common.validator.interfaces.PieceMover;
+import common.validator.validators.*;
 
 import java.util.ArrayList;
 import java.util.List;

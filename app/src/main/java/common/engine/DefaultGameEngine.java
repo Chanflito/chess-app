@@ -3,7 +3,6 @@ package common.engine;
 import checkers.CheckersGameOrganizer;
 import checkers.CheckersGameOrganizerBuilder;
 import common.adapter.Adapter;
-import chess.game.GameOrganizerBuilder;
 import common.result.InvalidMoveResult;
 import edu.austral.dissis.chess.gui.*;
 import common.enums.Color;

@@ -1,6 +1,7 @@
 package chess.game;
 
 import common.enums.Color;
+import common.game.Player;
 import common.game.interfaces.*;
 import common.move.Movement;
 import common.game.Piece;

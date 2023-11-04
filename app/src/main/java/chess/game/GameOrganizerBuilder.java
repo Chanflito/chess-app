@@ -4,6 +4,8 @@ import chess.board.ClassicBoardBuilder;
 import chess.board.CustomBoardBuilder;
 import common.board.interfaces.BoardBuilder;
 import common.enums.Color;
+import common.game.ClassicGame;
+import common.game.Player;
 import common.game.interfaces.GameOrganizer;
 
 import java.util.List;

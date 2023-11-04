@@ -1,4 +1,4 @@
-package checkers.wincondition;
+package common.wincondition;
 
 import common.board.interfaces.Board;
 import common.enums.Color;

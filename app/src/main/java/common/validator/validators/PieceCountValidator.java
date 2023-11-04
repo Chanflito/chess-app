@@ -1,4 +1,4 @@
-package checkers.validator;
+package common.validator.validators;
 
 import common.board.interfaces.Board;
 import common.enums.Color;

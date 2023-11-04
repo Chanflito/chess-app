@@ -4,7 +4,7 @@ import common.game.Position;
 import common.board.RectangularBoard;
 import common.game.PieceDirector;
 import common.game.Piece;
-import chess.piece.PieceCreator;
+import common.piece.PieceCreator;
 import common.board.interfaces.Board;
 import common.board.interfaces.BoardBuilder;
 import common.enums.Color;

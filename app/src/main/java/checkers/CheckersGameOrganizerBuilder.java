@@ -1,8 +1,10 @@
 package checkers;
 
 
-import checkers.wincondition.AllEnemyPiecesCaptureCondition;
-import chess.game.*;
+import common.wincondition.AllEnemyPiecesCaptureCondition;
+
+import common.game.ClassicGame;
+import common.game.Player;
 import common.board.interfaces.BoardBuilder;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;

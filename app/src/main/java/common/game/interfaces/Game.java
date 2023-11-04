@@ -1,7 +1,7 @@
 package common.game.interfaces;
 
 import common.board.interfaces.Board;
-import chess.game.Player;
+import common.game.Player;
 
 import java.util.List;
 

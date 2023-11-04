@@ -6,6 +6,7 @@ import common.game.Piece;
 import common.game.Position;
 import common.move.Movement;
 import common.validator.interfaces.MovementValidator;
+import common.validator.validators.PieceCountValidator;
 
 import java.util.Map;
 

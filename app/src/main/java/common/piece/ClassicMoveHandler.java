@@ -1,7 +1,7 @@
-package chess.piece;
+package common.piece;
 
 
-import chess.piece.mover.CompositeMover;
+import common.mover.CompositeMover;
 import common.result.Result;
 import common.board.interfaces.Board;
 import common.move.MoveHandler;
