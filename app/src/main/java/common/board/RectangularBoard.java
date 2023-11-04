@@ -43,7 +43,7 @@ public class RectangularBoard implements Board {
 
     @Override
     public RectangularBoard copy(){
-        return new RectangularBoard(rows,columns,copyMap(this.pieces),this.historyBoards);
+        return new RectangularBoard(rows,columns,copyMap(this.pieces),copyHistory());
     }
 
     private Map<Position,Piece> copyMap(Map<Position,Piece> map){
@@ -56,11 +56,11 @@ public class RectangularBoard implements Board {
         return newPieces;
     }
 
-//    private List<Map<Position,Piece>> copyHistory(){
-//        List<Map<Position, Piece>> newHistory=new ArrayList<>();
-//        for (Map<Position, Piece> historyBoard : historyBoards) {
-//            newHistory.add(copyMap(historyBoard));
-//        }
-//        return newHistory;
-//    }
+    private List<Map<Position,Piece>> copyHistory(){
+        List<Map<Position, Piece>> newHistory=new ArrayList<>();
+        for (Map<Position, Piece> historyBoard : historyBoards) {
+            newHistory.add(copyMap(historyBoard));
+        }
+        return newHistory;
+    }
 }

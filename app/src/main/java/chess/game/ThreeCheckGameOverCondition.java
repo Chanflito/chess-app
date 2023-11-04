@@ -4,7 +4,7 @@ import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
 import common.game.interfaces.GameOverCondition;
 import common.move.Movement;
-import chess.result.Result;
+import common.result.Result;
 
 
 public class ThreeCheckGameOverCondition implements GameOverCondition {

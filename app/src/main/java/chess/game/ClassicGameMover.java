@@ -7,11 +7,8 @@ import common.game.interfaces.GameMover;
 import common.move.Movement;
 import common.game.Piece;
 import common.move.MoveHandler;
-import chess.result.MoveResult;
-import chess.result.Result;
-
-import java.util.List;
-import java.util.Map;
+import common.result.MoveResult;
+import common.result.Result;
 
 
 public class ClassicGameMover implements GameMover {

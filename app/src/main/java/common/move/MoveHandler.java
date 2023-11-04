@@ -1,8 +1,7 @@
 package common.move;
 
 import common.board.interfaces.Board;
-import common.move.Movement;
-import chess.result.Result;
+import common.result.Result;
 
 
 public interface MoveHandler {

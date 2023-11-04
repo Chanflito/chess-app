@@ -4,8 +4,8 @@ import common.enums.Color;
 import common.game.interfaces.*;
 import common.move.Movement;
 import common.game.Piece;
-import chess.result.MoveResult;
-import chess.result.Result;
+import common.result.MoveResult;
+import common.result.Result;
 import org.jetbrains.annotations.NotNull;
 
 public class ClassicGameOrganizer implements GameOrganizer {

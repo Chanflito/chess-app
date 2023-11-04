@@ -1,4 +1,4 @@
-package chess.result;
+package common.result;
 
 import java.util.Optional;
 

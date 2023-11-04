@@ -12,8 +12,9 @@ public class CheckersGameOrganizerBuilder {
 
     public static GameOrganizer createCheckersGame(){
         BoardBuilder boardBuilder=new CheckersBoardBuilder();
-        return new ClassicGameOrganizer(new ClassicGame(List.of(new Player(Color.WHITE), new Player(Color.BLACK)),
-                boardBuilder.boardSize(8,8).build()), new ClassicGameMover(),
-                new ClassicTurnHandler(Color.WHITE), new ClassicWinCondition());}
+        return new ClassicGameOrganizer(new ClassicGame(List.of(new Player(Color.WHITE), new Player(Color.BLACK)), boardBuilder.boardSize(8,8).build()),
+                new CheckersGameMover(),
+                new ClassicTurnHandler(Color.WHITE),
+                new ClassicWinCondition());}
 
 }

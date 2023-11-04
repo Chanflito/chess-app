@@ -1,9 +1,10 @@
-package checkers.validator;
+package checkers.mover;
 
 import common.game.Position;
 import common.move.Movement;
 import common.game.Piece;
-import chess.result.Result;
+import common.result.MoveResult;
+import common.result.Result;
 import common.board.interfaces.Board;
 import common.enums.Color;
 import common.validator.interfaces.MovementValidator;
@@ -30,8 +31,9 @@ public class CaptureMover implements PieceMover {
 
     @Override
     public Result<Board, Boolean> move(Movement movement, Board board) {
+        if (!isValid(movement, board)) return new MoveResult<>(board, false);
         Position from= movement.getFrom().copy();
-        Position to=movement.getTo().copy();//TODO
+        Position to=movement.getTo().copy();
         Board boardClone=board.copy();
         int distanceX=calculateDistance(from.x(),to.x());
         int distanceY=calculateDistance(from.y(),to.y());
@@ -39,10 +41,13 @@ public class CaptureMover implements PieceMover {
         if (isDiagonalMovement(distanceX,distanceY)){
             Position middlePosition= new Position((from.x()+to.x())/2,(from.y()+to.y())/2);
             if (isEnemyPiece(middlePosition,boardClone,enemyColor)){
-                return null;
+                boardClone.getPieces().remove(middlePosition);
+                boardClone.getPieces().put(to,boardClone.getPieces().get(from));
+                boardClone.getPieces().remove(from);
+                return new MoveResult<>(boardClone, true);
             }
         }
-        return null;
+        return new MoveResult<>(boardClone, false);
     }
 
     private Color getColor(Position from, Board boardClone) {
@@ -62,21 +67,5 @@ public class CaptureMover implements PieceMover {
         return distanceX==distanceY;
     }
 
-    private boolean checkPreviousCapture(Board board, Color enemyPieceColor){
-        List<Map<Position, Piece>> previousBoards=board.getHistory();
-        if (previousBoards.size()<2) return false;
-        Map<Position,Piece> previousBoard=previousBoards.get(previousBoards.size()-2);
-        Map<Position,Piece> currentBoard=previousBoards.get(previousBoards.size()-1);
-        int previousEnemyPieces=0;
-        int currentEnemyPieces=0;
-        for (Map.Entry<Position,Piece> entry: previousBoard.entrySet()){
-            if (entry.getValue().getColor()==enemyPieceColor) previousEnemyPieces++;
-        }
-        for (Map.Entry<Position,Piece> entry: currentBoard.entrySet()){
-            if (entry.getValue().getColor()==enemyPieceColor) currentEnemyPieces++;
-        }
-        return previousEnemyPieces!=currentEnemyPieces;
-    }
 
-    
 }

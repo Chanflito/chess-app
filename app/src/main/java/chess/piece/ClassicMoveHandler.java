@@ -2,7 +2,7 @@ package chess.piece;
 
 
 import chess.piece.mover.CompositeMover;
-import chess.result.Result;
+import common.result.Result;
 import common.board.interfaces.Board;
 import common.move.MoveHandler;
 import common.move.Movement;

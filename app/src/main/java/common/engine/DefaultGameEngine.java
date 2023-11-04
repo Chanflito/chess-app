@@ -1,12 +1,13 @@
 package common.engine;
 
+import checkers.CheckersGameOrganizerBuilder;
 import common.adapter.Adapter;
 import chess.game.GameOrganizerBuilder;
 import edu.austral.dissis.chess.gui.*;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
 import org.jetbrains.annotations.NotNull;
-import chess.result.Result;
+import common.result.Result;
 
 import java.util.Stack;
 //Implementar una condicion de victoria nueva, haciendo un composicion.
@@ -16,7 +17,7 @@ public class DefaultGameEngine implements GameEngine {
     private final GameOrganizer gameOrganizer;
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
-        this.gameOrganizer = GameOrganizerBuilder.createClassicGame();
+        this.gameOrganizer = CheckersGameOrganizerBuilder.createCheckersGame();
         previousGameOrganizers.push(gameOrganizer);
     }
 

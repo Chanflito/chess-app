@@ -1,6 +1,6 @@
 package chess.validator;
 
-import chess.result.Result;
+import common.result.Result;
 import common.game.Position;
 import common.board.interfaces.Board;
 import common.enums.Color;

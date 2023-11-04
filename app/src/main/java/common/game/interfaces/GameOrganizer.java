@@ -3,8 +3,8 @@ package common.game.interfaces;
 
 import common.enums.Color;
 import common.move.Movement;
-import chess.result.MoveResult;
-import chess.result.Result;
+import common.result.MoveResult;
+import common.result.Result;
 public interface GameOrganizer {
 
     Game currentGame();

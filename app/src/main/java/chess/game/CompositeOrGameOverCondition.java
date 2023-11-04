@@ -4,9 +4,9 @@ import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
 import common.game.interfaces.GameOverCondition;
 import common.move.Movement;
-import chess.result.MoveResult;
-import chess.result.Result;
-import chess.result.WinResult;
+import common.result.MoveResult;
+import common.result.Result;
+import common.result.WinResult;
 
 import java.util.List;
 

@@ -5,15 +5,13 @@ import common.board.interfaces.Board;
 import chess.director.MoveHandlerDirector;
 import common.enums.Color;
 import chess.piece.PieceType;
-import chess.result.MoveResult;
-import chess.result.Result;
+import common.result.MoveResult;
+import common.result.Result;
 import common.validator.interfaces.MovementValidator;
 import common.validator.interfaces.PieceMover;
 import common.move.Movement;
 import common.game.Piece;
 import common.move.MoveHandler;
-
-import java.util.List;
 
 public class PromoteMover implements PieceMover {
     private final MovementValidator movementValidator;

@@ -1,7 +1,7 @@
 package common.validator.interfaces;
 
 import common.board.interfaces.Board;
-import chess.result.Result;
+import common.result.Result;
 import common.move.Movement;
 
 public interface PieceMover extends MovementValidator {
