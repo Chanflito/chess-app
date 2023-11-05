@@ -3,13 +3,14 @@ package checkers.director;
 
 import checkers.mover.CaptureMover;
 import checkers.validator.CanCaptureValidator;
+import common.mover.CaptureAndPromoteMover;
 import common.validator.validators.PieceCountValidator;
 import checkers.validator.PreviousCaptureValidator;
 import common.piece.ClassicMoveHandler;
 import common.piece.PieceCreator;
 import common.enums.PieceType;
 import common.piece.PieceBuilder;
-import common.mover.CompositeMover;
+import common.mover.CompositeOrMover;
 import common.mover.DefaultMover;
 import common.mover.PromoteMover;
 import common.enums.Direction;
@@ -35,7 +36,9 @@ public class CheckersMoveHandlerDirector {
         CaptureMover continuousCaptureMover=createContinuousCaptureMover();
         CaptureMover firstCaptureMover=createFirstCaptureMover(getPawnsDirectionToCapture(color));
         PieceMover promoteMover=createPromotion(color);
-        return new ClassicMoveHandler(new CompositeMover(List.of(promoteMover,
+        PieceMover captureWithContinuousAndPromoteMover=new CaptureAndPromoteMover(List.of(continuousCaptureMover,promoteMover),buildPreQueen(color));
+        PieceMover firstCaptureAndPromoteMover=new CaptureAndPromoteMover(List.of(firstCaptureMover,promoteMover),buildPreQueen(color));
+        return new ClassicMoveHandler(new CompositeOrMover(List.of(firstCaptureAndPromoteMover,captureWithContinuousAndPromoteMover,promoteMover,
                 continuousCaptureMover,firstCaptureMover,defaultMover)));
     }
 
@@ -48,7 +51,7 @@ public class CheckersMoveHandlerDirector {
         DefaultMover defaultMover= new DefaultMover(orValidator,norValidator);
         CaptureMover continuousCaptureMover=createContinuousCaptureMover();
         CaptureMover firstCaptureMover=createFirstCaptureMover(getAllDirectionsToCapture());
-        return new ClassicMoveHandler(new CompositeMover(List.of(continuousCaptureMover,firstCaptureMover,defaultMover)));
+        return new ClassicMoveHandler(new CompositeOrMover(List.of(continuousCaptureMover,firstCaptureMover,defaultMover)));
     }
     private void setPawnsValidator(Color color, List<MovementValidator> orValidator,
                                    List<MovementValidator> andValidator) {
@@ -108,10 +111,14 @@ public class CheckersMoveHandlerDirector {
     }
 
     private PromoteMover createPromotion(Color color){
-        PieceBuilder pieceBuilder=new PieceCreator().type(PieceType.QUEEN).movement(createQueenMovement()).color(color);
+        PieceBuilder pieceBuilder= buildPreQueen(color);
         MovementValidator promotionRules=createPromotionRules(color);
         CompositeNorValidator defaultRules=new CompositeNorValidator((List.of(new InBoardValidator())));
         return new PromoteMover(new CompositeValidator(promotionRules,defaultRules),pieceBuilder);
+    }
+
+    private PieceBuilder buildPreQueen(Color color) {
+        return new PieceCreator().type(PieceType.QUEEN).movement(createQueenMovement()).color(color);
     }
 
     private List<Position> getPawnsDirectionToCapture(Color color){
@@ -131,18 +138,34 @@ public class CheckersMoveHandlerDirector {
 
     }
 
+//    private MovementValidator createPromotionRules(Color color){
+//        List<MovementValidator> rules=new ArrayList<>();
+//        List<Direction> directions=getPawnDirections(color);
+//        rules.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
+//                List.of(new UnidirectionalMovementValidator(directions.get(0)),new PathValidator(directions.get(0)),
+//                        new CaptureValidator(false),new IncrementValidator(1)))));
+//        rules.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
+//                List.of(new UnidirectionalMovementValidator(directions.get(1)),new PathValidator(directions.get(1)),
+//                        new CaptureValidator(false),new IncrementValidator(1)))));
+//        rules.add((new CompositeAndValidator(List.of(new CanCaptureValidator(getAllDirectionsToCapture()),
+//                new PreviousCaptureValidator()))));
+//        rules.add(new CompositeXorValidator(new PreviousCaptureValidator(),new CanCaptureValidator(getPawnsDirectionToCapture(color))));
+//        return new CompositeAndValidator(List.of((new CompositeOrValidator(rules))));
+//    }
+
     private MovementValidator createPromotionRules(Color color){
         List<MovementValidator> rules=new ArrayList<>();
         List<Direction> directions=getPawnDirections(color);
-        rules.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
+        rules.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(0)),new PathValidator(directions.get(0)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
-        rules.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
+                        new CaptureValidator(false),new IncrementValidator(1))));
+        rules.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(1)),new PathValidator(directions.get(1)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new CaptureValidator(false),new IncrementValidator(1))));
         rules.add((new CompositeAndValidator(List.of(new CanCaptureValidator(getAllDirectionsToCapture()),
                 new PreviousCaptureValidator()))));
         rules.add(new CompositeXorValidator(new PreviousCaptureValidator(),new CanCaptureValidator(getPawnsDirectionToCapture(color))));
         return new CompositeAndValidator(List.of((new CompositeOrValidator(rules))));
     }
 }
+

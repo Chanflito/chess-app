@@ -8,10 +8,10 @@ import common.validator.interfaces.PieceMover;
 
 import java.util.List;
 
-public class CompositeMover implements PieceMover {
+public class CompositeOrMover implements PieceMover {
     private final List<PieceMover> pieceMovers;
 
-    public CompositeMover(List<PieceMover> pieceMovers) {
+    public CompositeOrMover(List<PieceMover> pieceMovers) {
         this.pieceMovers = pieceMovers;
     }
     @Override
