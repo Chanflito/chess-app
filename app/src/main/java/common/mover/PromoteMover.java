@@ -11,6 +11,8 @@ import common.validator.interfaces.PieceMover;
 import common.move.Movement;
 import common.game.Piece;
 
+import java.util.Optional;
+
 public class PromoteMover implements PieceMover {
     private final MovementValidator movementValidator;
     private final PieceBuilder pieceBuilder;
@@ -33,7 +35,7 @@ public class PromoteMover implements PieceMover {
 
     @Override
     public Result<Board, Boolean> move(Movement movement, Board board) {
-            if (!isValid(movement,board)) return new MoveResult<>(board,false);
+            if (!isValid(movement,board)) return new MoveResult<>(board, Optional.of(false));
             Board boardClone=board.copy();
             Position initialPosition=movement.getFrom().copy();
             //Por la UI necesito que tengan el mismo id.
@@ -44,7 +46,7 @@ public class PromoteMover implements PieceMover {
             //Por default es queen.
             Piece piece=pieceBuilder.id(id).color(playerColor).build();
             boardClone.getPieces().put(finalPosition,piece);
-            return new MoveResult<>(boardClone,true);
+            return new MoveResult<>(boardClone,Optional.of(true));
     }
 
 }

@@ -1,6 +1,6 @@
 package checkers.game;
 
-import common.game.ClassicGame;
+import common.game.ClassicGameData;
 import common.game.Position;
 import common.move.Movement;
 import common.game.Piece;
@@ -8,25 +8,25 @@ import common.move.MoveHandler;
 import common.result.MoveResult;
 import common.result.Result;
 import common.board.interfaces.Board;
-import common.game.interfaces.Game;
+import common.game.interfaces.GameData;
 import common.game.interfaces.GameMover;
 
 import java.util.Optional;
 
 public class CheckersGameMover implements GameMover {
     @Override
-    public Result<Game, String> movePiece(Movement movement, Game game) {
-        Piece piece=getPieceInPosition(game.getBoard(),movement.getFrom());
+    public Result<GameData, String> movePiece(Movement movement, GameData gameData) {
+        Piece piece=getPieceInPosition(gameData.getBoard(),movement.getFrom());
         MoveHandler moveHandler=piece.getMoveHandler();
-        Board boardClone=game.getBoard().copy();
+        Board boardClone= gameData.getBoard().copy();
         Result<Board,Boolean> result=moveHandler.handleMove(movement,boardClone);
-        Optional<Boolean> success=result.getValue();
+        Optional<Boolean> success=result.value();
         if (success.isPresent() && success.get()){
-            Board resultBoard=result.getKey().copy();
-            resultBoard.getHistory().add(result.getKey().getPieces());
-            return new MoveResult<>(new ClassicGame(game.getPlayers(),resultBoard),null);
+            Board resultBoard=result.key().copy();
+            resultBoard.getHistory().add(result.key().getPieces());
+            return new MoveResult<>(new ClassicGameData(gameData.getPlayers(),resultBoard),Optional.empty());
         }
-        return new MoveResult<>(game.copy(),"Invalid Movement");
+        return new MoveResult<>(gameData.copy(), Optional.of("Invalid Movement"));
     }
 
 

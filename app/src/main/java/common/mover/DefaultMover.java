@@ -9,6 +9,8 @@ import common.move.Movement;
 import common.validator.interfaces.MovementValidator;
 import common.validator.interfaces.PieceMover;
 
+import java.util.Optional;
+
 
 public class DefaultMover implements PieceMover {
 
@@ -31,7 +33,7 @@ public class DefaultMover implements PieceMover {
         Piece pieceToMove=boardClone.getPieces().get(movement.getFrom());
         boardClone.getPieces().remove(movement.getFrom());
         boardClone.getPieces().put(movement.getTo().copy(),pieceToMove);
-        return new MoveResult<>(boardClone,true);
+        return new MoveResult<>(boardClone, Optional.of(true));
     }
 
     private boolean checkValidators(Movement movement,Board board){

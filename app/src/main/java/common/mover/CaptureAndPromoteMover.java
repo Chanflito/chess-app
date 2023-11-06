@@ -11,6 +11,7 @@ import common.result.Result;
 import common.validator.interfaces.PieceMover;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CaptureAndPromoteMover implements PieceMover {
 
@@ -35,8 +36,8 @@ public class CaptureAndPromoteMover implements PieceMover {
     @Override
     public Result<Board, Boolean> move(Movement movement, Board board) {
         Result<Board,Boolean> result=pieceMover.get(0).move(movement,board);
-        if (result.getValue().get()){
-            Board boardClone=result.getKey().copy();
+        if (result.value().get()){
+            Board boardClone=result.key().copy();
             Position finalPosition= movement.getTo().copy();
             Piece piece= getPiece(boardClone, finalPosition);
             String pieceId=piece.getId();
@@ -44,10 +45,10 @@ public class CaptureAndPromoteMover implements PieceMover {
             Piece piecePromoted=pieceBuilder.id(pieceId).color(playerColor).build();
             boardClone.getPieces().remove(finalPosition);
             boardClone.getPieces().put(finalPosition,piecePromoted);
-            return new MoveResult<>(boardClone,true);
+            return new MoveResult<>(boardClone, Optional.of(true));
 
         }
-        return new MoveResult<>(board,false);
+        return new MoveResult<>(board,Optional.of(false));
     }
 
     private Piece getPiece(Board boardClone, Position finalPosition) {

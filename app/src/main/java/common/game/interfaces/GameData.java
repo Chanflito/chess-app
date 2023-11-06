@@ -5,10 +5,10 @@ import common.game.Player;
 
 import java.util.List;
 
-public interface Game {
+public interface GameData {
     Board getBoard();
 
     List<Player> getPlayers();
 
-    Game copy();
+    GameData copy();
 }

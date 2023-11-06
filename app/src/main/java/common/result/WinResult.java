@@ -14,12 +14,12 @@ public class WinResult implements Result<Boolean, Color>{
     }
 
     @Override
-    public Boolean getKey() {
+    public Boolean key() {
         return this.winResult;
     }
 
     @Override
-    public Optional<Color> getValue() {
+    public Optional<Color> value() {
         return Optional.ofNullable(this.color);
     }
 }

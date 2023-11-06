@@ -12,6 +12,7 @@ import common.validator.interfaces.PieceMover;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class CaptureMover implements PieceMover {
 
@@ -31,7 +32,7 @@ public class CaptureMover implements PieceMover {
 
     @Override
     public Result<Board, Boolean> move(Movement movement, Board board) {
-        if (!isValid(movement, board)) return new MoveResult<>(board, false);
+        if (!isValid(movement, board)) return new MoveResult<>(board, Optional.of(false));
         Position from= movement.getFrom().copy();
         Position to=movement.getTo().copy();
         Board boardClone=board.copy();
@@ -44,10 +45,10 @@ public class CaptureMover implements PieceMover {
                 boardClone.getPieces().remove(middlePosition);
                 boardClone.getPieces().put(to,boardClone.getPieces().get(from));
                 boardClone.getPieces().remove(from);
-                return new MoveResult<>(boardClone, true);
+                return new MoveResult<>(boardClone, Optional.of(true));
             }
         }
-        return new MoveResult<>(boardClone, false);
+        return new MoveResult<>(boardClone, Optional.of(false));
     }
 
     private Color getColor(Position from, Board boardClone) {

@@ -7,5 +7,4 @@ public interface TurnHandler {
     Color getCurrentTurn();
     TurnHandler nextTurn();
 
-
 }

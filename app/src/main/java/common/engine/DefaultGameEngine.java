@@ -1,7 +1,6 @@
 package common.engine;
 
-import checkers.game.CheckersGameOrganizerBuilder;
-import chess.game.GameOrganizerBuilder;
+import checkers.game.CheckersGameOrganizerFactory;
 import common.adapter.Adapter;
 import common.result.InvalidMoveResult;
 import edu.austral.dissis.chess.gui.*;
@@ -16,7 +15,7 @@ public class DefaultGameEngine implements GameEngine {
     private final GameOrganizer gameOrganizer;
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
-        this.gameOrganizer = CheckersGameOrganizerBuilder.createCheckersGame();
+        this.gameOrganizer = CheckersGameOrganizerFactory.createCheckersGame();
         previousGameOrganizers.push(gameOrganizer);
     }
 
@@ -26,12 +25,12 @@ public class DefaultGameEngine implements GameEngine {
             Result<?,?> tryMovement= previousGameOrganizers.peek().move(Adapter.convertMove(move)
                     , previousGameOrganizers.peek().currentGame());
             if (tryMovement instanceof InvalidMoveResult){
-                return new InvalidMove((String) tryMovement.getValue().get());
+                return new InvalidMove((String) tryMovement.value().get());
             }
             if (tryMovement instanceof common.result.WinResult){
-                return new GameOver(Adapter.getWinner((Color) tryMovement.getValue().get()));
+                return new GameOver(Adapter.getWinner((Color) tryMovement.value().get()));
             }
-            GameOrganizer newGameOrganizer= (GameOrganizer) tryMovement.getKey();
+            GameOrganizer newGameOrganizer= (GameOrganizer) tryMovement.key();
             previousGameOrganizers.pop();
             previousGameOrganizers.push(newGameOrganizer);
             return new NewGameState(Adapter.getCurrentPieces(newGameOrganizer.currentGame().getBoard())

@@ -62,15 +62,15 @@ public class CheckValidator implements MovementValidator {
         boardClone.getPieces().put(movement.getTo(),piece);
         boardClone.getPieces().remove(movement.getFrom(),piece);
         Position position= movement.getFrom().equals(kingPosition) ? movement.getTo().copy() : kingPosition.copy();
-        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position).getValue().get()){
+        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position).value().get()){
             if (checkIfEnemyCanCapture(boardClone,
-                    enemyPosition,enemyPiece,position).getValue().get()) return true;
+                    enemyPosition,enemyPiece,position).value().get()) return true;
         }
         if (checkIfEnemyCanCapture(boardClone,
-                enemyPosition,enemyPiece,position).getValue().get()) return true;
-        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position).getValue().get()){
+                enemyPosition,enemyPiece,position).value().get()) return true;
+        if (checkIfEnemyCanCapture(board,enemyPosition,enemyPiece,position).value().get()){
             if (checkIfEnemyCanCapture(boardClone,
-                    enemyPosition,enemyPiece,position).getValue().get()) {
+                    enemyPosition,enemyPiece,position).value().get()) {
                 return checkMovementToEnemy(enemyPosition, movement);
             }
         }

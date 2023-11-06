@@ -13,12 +13,12 @@ public class InvalidMoveResult implements Result<Boolean,String>{
     }
 
     @Override
-    public Boolean getKey() {
+    public Boolean key() {
         return this.isInvalid;
     }
 
     @Override
-    public Optional<String> getValue() {
+    public Optional<String> value() {
         return Optional.ofNullable(this.message);
     }
 }

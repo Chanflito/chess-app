@@ -1,9 +1,9 @@
 package chess.game;
 
-import common.game.ClassicGame;
+import common.game.ClassicGameData;
 import common.game.Position;
 import common.board.interfaces.Board;
-import common.game.interfaces.Game;
+import common.game.interfaces.GameData;
 import common.game.interfaces.GameOverCondition;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
@@ -26,9 +26,9 @@ public class ClassicWinCondition implements GameOverCondition {
         Color currentColor= gameOrganizer.getTurnHandler().getCurrentTurn();
         Color oponentColor= currentColor== Color.BLACK ? Color.WHITE : Color.BLACK;
         Movement movementOfCurrentPlayer= new Movement(movement.getFrom(),movement.getTo());
-        Game game = new ClassicGame(gameOrganizer.currentGame().getPlayers(),currentBoard);
+        GameData gameData = new ClassicGameData(gameOrganizer.currentGame().getPlayers(),currentBoard);
         //Si mi movimiento es valido, tengo que probar si deja en jaque al otro.
-        if (checkIfOwnMovementIsValid(gameOrganizer, movementOfCurrentPlayer,game)){
+        if (checkIfOwnMovementIsValid(gameOrganizer, movementOfCurrentPlayer, gameData)){
             Piece pieceToMove= currentBoard.getPieces().get(movement.getFrom());
             Position initialPosition= movement.getFrom();
             currentBoard.getPieces().remove(initialPosition);
@@ -49,7 +49,7 @@ public class ClassicWinCondition implements GameOverCondition {
                     //Pruebo todos los casos posibles de movimiento del oponente.
                     Movement move= new Movement(position,new Position(i,j));
                     Piece piece= currentBoard.getPieces().get(position);
-                    if (checkMovementsOfEnemy(currentBoard, move, piece).getValue().get()){
+                    if (checkMovementsOfEnemy(currentBoard, move, piece).value().get()){
                         //Si alguno de los movimientos del oponente es valido, entonces no hay jaque mate.
                         return new WinResult(false, null);
                     }
@@ -63,8 +63,8 @@ public class ClassicWinCondition implements GameOverCondition {
         return piece.getMoveHandler().handleMove(move,currentBoard);
     }
 
-    private boolean checkIfOwnMovementIsValid(GameOrganizer gameOrganizer, Movement movementOfCurrentPlayer,Game game) {
-        return gameOrganizer.getGameMover().movePiece(movementOfCurrentPlayer,game).getValue().isEmpty();
+    private boolean checkIfOwnMovementIsValid(GameOrganizer gameOrganizer, Movement movementOfCurrentPlayer, GameData gameData) {
+        return gameOrganizer.getGameMover().movePiece(movementOfCurrentPlayer, gameData).value().isEmpty();
     }
 
 

@@ -1,17 +1,17 @@
 package common.game;
 
 import common.board.interfaces.Board;
-import common.game.interfaces.Game;
+import common.game.interfaces.GameData;
 
 import java.util.List;
 
-public class ClassicGame implements Game {
+public class ClassicGameData implements GameData {
     private final List<Player> players;
 
     private final Board currentBoard;
 
 
-    public ClassicGame(List<Player> players, Board currentBoard) {
+    public ClassicGameData(List<Player> players, Board currentBoard) {
         this.players = players;
         this.currentBoard = currentBoard;
     }
@@ -28,7 +28,7 @@ public class ClassicGame implements Game {
 
 
     @Override
-    public Game copy() {
-        return new ClassicGame(this.players,currentBoard.copy());
+    public GameData copy() {
+        return new ClassicGameData(this.players,currentBoard.copy());
     }
 }

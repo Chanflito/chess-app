@@ -1,9 +1,9 @@
 package chess.game;
 
-import common.game.ClassicGame;
+import common.game.ClassicGameData;
 import common.game.Position;
 import common.board.interfaces.Board;
-import common.game.interfaces.Game;
+import common.game.interfaces.GameData;
 import common.game.interfaces.GameMover;
 import common.move.Movement;
 import common.game.Piece;
@@ -11,21 +11,23 @@ import common.move.MoveHandler;
 import common.result.MoveResult;
 import common.result.Result;
 
+import java.util.Optional;
+
 
 public class ClassicGameMover implements GameMover {
 
     @Override
-    public MoveResult<Game, String> movePiece(Movement movement, Game game) {
-        Piece piece=getPieceInPosition(game.getBoard(),movement.getFrom());
+    public MoveResult<GameData, String> movePiece(Movement movement, GameData gameData) {
+        Piece piece=getPieceInPosition(gameData.getBoard(),movement.getFrom());
         MoveHandler moveHandler=piece.getMoveHandler();
-        Board boardClone=game.getBoard().copy();
+        Board boardClone= gameData.getBoard().copy();
         Result<Board,Boolean> result= moveHandler.handleMove(movement, boardClone);
-        if (result.getValue().get()){
-            Board resultBoard=result.getKey().copy();
+        if (result.value().get()){
+            Board resultBoard=result.key().copy();
             resultBoard.getHistory().add(boardClone.getPieces());
-            return new MoveResult<>(new ClassicGame(game.getPlayers(),resultBoard),null);
+            return new MoveResult<>(new ClassicGameData(gameData.getPlayers(),resultBoard), Optional.empty());
         }
-        return new MoveResult<>(game.copy(),"Invalid Movement");
+        return new MoveResult<>(gameData.copy(),Optional.of("Invalid Movement"));
     }
 
     private Piece getPieceInPosition(Board board, Position position){

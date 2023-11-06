@@ -23,7 +23,7 @@ public class CompositeOrGameOverCondition implements GameOverCondition {
     public Result<Boolean, Color> evaluateCondition(Movement movement, GameOrganizer gameOrganizer) {
         for (GameOverCondition g: gameOverConditions) {
             Result<Boolean, Color> result = g.evaluateCondition(movement,gameOrganizer);
-            if (result.getKey()) return new WinResult(result.getKey(),result.getValue().get());
+            if (result.key()) return new WinResult(result.key(),result.value().get());
         }
         return new MoveResult<>(false, null);
     }
