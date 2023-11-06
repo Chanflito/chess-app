@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "edu.austral.dissis.chess"
-version = "1.0.0"
+version = "2.0.0"
 
 repositories {
 //    mavenLocal()
@@ -24,7 +24,7 @@ repositories {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("edu.austral.dissis.chess:chess-ui:1.0.0")
+    implementation("edu.austral.dissis.chess:chess-ui:2.0.0")
 }
 
 javafx {
