@@ -4,5 +4,5 @@ import common.move.Movement;
 import common.result.Result;
 
 public interface GameMover {
-    Result<GameData, String> movePiece(Movement movement, GameData gameData);
+    Result<GameState, String> movePiece(Movement movement, GameState gameState);
 }

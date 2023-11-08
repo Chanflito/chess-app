@@ -2,18 +2,18 @@ package common.game;
 
 import common.board.interfaces.Board;
 import common.enums.Color;
-import common.game.interfaces.GameData;
+import common.game.interfaces.GameState;
 
 import java.util.List;
 
-public class ClassicGameData implements GameData {
+public class ClassicGameState implements GameState {
     private final List<Player> players;
 
     private final Board currentBoard;
 
     private final Color color;
 
-    public ClassicGameData(List<Player> players, Board currentBoard, Color color) {
+    public ClassicGameState(List<Player> players, Board currentBoard, Color color) {
         this.players = players;
         this.currentBoard = currentBoard;
         this.color = color;
@@ -36,7 +36,7 @@ public class ClassicGameData implements GameData {
 
 
     @Override
-    public GameData copy() {
-        return new ClassicGameData(this.players,currentBoard.copy(),color);
+    public GameState copy() {
+        return new ClassicGameState(this.players,currentBoard.copy(),color);
     }
 }

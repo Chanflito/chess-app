@@ -7,7 +7,6 @@ import edu.austral.dissis.chess.gui.ChessPiece;
 import edu.austral.dissis.chess.gui.Move;
 import edu.austral.dissis.chess.gui.PlayerColor;
 import common.enums.Color;
-import common.game.interfaces.TurnHandler;
 import common.move.Movement;
 import common.game.Piece;
 import java.util.ArrayList;

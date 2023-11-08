@@ -1,9 +1,9 @@
 package chess.game;
 
-import common.game.ClassicGameData;
+import common.game.ClassicGameState;
 import common.game.Position;
 import common.board.interfaces.Board;
-import common.game.interfaces.GameData;
+import common.game.interfaces.GameState;
 import common.game.interfaces.GameOverCondition;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
@@ -26,9 +26,9 @@ public class ClassicWinCondition implements GameOverCondition {
         Color currentColor= gameOrganizer.currentGame().currentTurn();
         Color oponentColor= currentColor== Color.BLACK ? Color.WHITE : Color.BLACK;
         Movement movementOfCurrentPlayer= new Movement(movement.getFrom(),movement.getTo());
-        GameData gameData = new ClassicGameData(gameOrganizer.currentGame().getPlayers(),currentBoard,currentColor);
+        GameState gameState = new ClassicGameState(gameOrganizer.currentGame().getPlayers(),currentBoard,currentColor);
         //Si mi movimiento es valido, tengo que probar si deja en jaque al otro.
-        if (checkIfOwnMovementIsValid(gameOrganizer, movementOfCurrentPlayer, gameData)){
+        if (checkIfOwnMovementIsValid(gameOrganizer, movementOfCurrentPlayer, gameState)){
             Piece pieceToMove= currentBoard.getPieces().get(movement.getFrom());
             Position initialPosition= movement.getFrom();
             currentBoard.getPieces().remove(initialPosition);
@@ -63,8 +63,8 @@ public class ClassicWinCondition implements GameOverCondition {
         return piece.getMoveHandler().handleMove(move,currentBoard);
     }
 
-    private boolean checkIfOwnMovementIsValid(GameOrganizer gameOrganizer, Movement movementOfCurrentPlayer, GameData gameData) {
-        return gameOrganizer.getGameMover().movePiece(movementOfCurrentPlayer, gameData).value().isEmpty();
+    private boolean checkIfOwnMovementIsValid(GameOrganizer gameOrganizer, Movement movementOfCurrentPlayer, GameState gameState) {
+        return gameOrganizer.getGameMover().movePiece(movementOfCurrentPlayer, gameState).value().isEmpty();
     }
 
 

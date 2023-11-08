@@ -6,12 +6,12 @@ import common.game.Player;
 
 import java.util.List;
 
-public interface GameData {
+public interface GameState {
     Board getBoard();
 
     List<Player> getPlayers();
 
     Color currentTurn();
 
-    GameData copy();
+    GameState copy();
 }

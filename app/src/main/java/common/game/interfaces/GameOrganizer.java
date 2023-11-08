@@ -5,12 +5,12 @@ import common.enums.Color;
 import common.move.Movement;
 import common.result.Result;
 public interface GameOrganizer {
-    GameData currentGame();
+    GameState currentGame();
     
     GameMover getGameMover();
-    TurnHandler getTurnHandler();
+    TurnStrategy getTurnHandler();
 
-    Result<?,?> move(Movement movement, GameData gameData);
+    Result<?,?> move(Movement movement, GameState gameState);
 
     Result<Boolean,Color> isGameOver(Movement movement);
     GameOrganizer copy();
