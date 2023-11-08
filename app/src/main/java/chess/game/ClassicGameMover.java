@@ -25,7 +25,7 @@ public class ClassicGameMover implements GameMover {
         if (result.value().get()){
             Board resultBoard=result.key().copy();
             resultBoard.getHistory().add(boardClone.getPieces());
-            return new MoveResult<>(new ClassicGameData(gameData.getPlayers(),resultBoard), Optional.empty());
+            return new MoveResult<>(new ClassicGameData(gameData.getPlayers(),resultBoard,gameData.currentTurn()), Optional.empty());
         }
         return new MoveResult<>(gameData.copy(),Optional.of("Invalid Movement"));
     }

@@ -2,38 +2,30 @@ package checkers.game;
 
 import checkers.helper.TurnHelper;
 import common.enums.Color;
+import common.game.interfaces.GameData;
 import common.game.interfaces.TurnHandler;
 
 import java.util.Optional;
 
 public class CheckersTurnHandler implements TurnHandler {
-    private final Color currentTurn;
 
     private final TurnHelper turnHelper;
 
-    public CheckersTurnHandler(Color currentTurn, TurnHelper turnHelper) {
-        this.currentTurn = currentTurn;
+
+    public CheckersTurnHandler(TurnHelper turnHelper) {
         this.turnHelper = turnHelper;
     }
 
-    public CheckersTurnHandler(Color currentTurn){
-        this.currentTurn=currentTurn;
-        this.turnHelper=null;
-    }
-    @Override
-    public Color getCurrentTurn() {
-        return this.currentTurn;
-    }
 
     @Override
-    public TurnHandler nextTurn() {
+    public Color nextTurn(GameData gameData) {
         if (getTurnHelper().isPresent()){
-            boolean notChangeTurn= getTurnHelper().get().notChangeTurn();
+            boolean notChangeTurn= getTurnHelper().get().notChangeTurn(gameData.getBoard());
             if (notChangeTurn){
-                return new CheckersTurnHandler(this.currentTurn);
+                return gameData.currentTurn();
             }
         }
-        return new CheckersTurnHandler(this.currentTurn==Color.WHITE ? Color.BLACK : Color.WHITE);
+        return  gameData.currentTurn()==Color.WHITE ? Color.BLACK : Color.WHITE;
     }
 
     private Optional<TurnHelper> getTurnHelper() {

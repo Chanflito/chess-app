@@ -23,10 +23,10 @@ public class ClassicWinCondition implements GameOverCondition {
     @Override
     public Result<Boolean,Color> evaluateCondition(Movement movement, GameOrganizer gameOrganizer) {
         Board currentBoard= gameOrganizer.currentGame().getBoard().copy();
-        Color currentColor= gameOrganizer.getTurnHandler().getCurrentTurn();
+        Color currentColor= gameOrganizer.currentGame().currentTurn();
         Color oponentColor= currentColor== Color.BLACK ? Color.WHITE : Color.BLACK;
         Movement movementOfCurrentPlayer= new Movement(movement.getFrom(),movement.getTo());
-        GameData gameData = new ClassicGameData(gameOrganizer.currentGame().getPlayers(),currentBoard);
+        GameData gameData = new ClassicGameData(gameOrganizer.currentGame().getPlayers(),currentBoard,currentColor);
         //Si mi movimiento es valido, tengo que probar si deja en jaque al otro.
         if (checkIfOwnMovementIsValid(gameOrganizer, movementOfCurrentPlayer, gameData)){
             Piece pieceToMove= currentBoard.getPieces().get(movement.getFrom());

@@ -30,8 +30,8 @@ public class Adapter {
         return new BoardSize(board.getSizeOfRows(),board.getSizeOfColumns());
     }
 
-    public static PlayerColor getCurrentTurn(TurnHandler turnHandler){
-        return turnHandler.getCurrentTurn()== Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
+    public static PlayerColor getCurrentTurn(Color playerTurn){
+        return playerTurn== Color.WHITE? PlayerColor.WHITE:PlayerColor.BLACK;
     }
 
     public static PlayerColor getWinner(Color color){

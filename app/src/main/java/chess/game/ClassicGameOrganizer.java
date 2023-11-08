@@ -1,6 +1,7 @@
 package chess.game;
 
 import common.enums.Color;
+import common.game.ClassicGameData;
 import common.game.Player;
 import common.game.interfaces.*;
 import common.move.Movement;
@@ -20,7 +21,6 @@ public class ClassicGameOrganizer implements GameOrganizer {
     private final GameMover gameMover;
 
     private final TurnHandler turnHandler;
-
 
     private final GameOverCondition gameOverCondition;
 
@@ -54,12 +54,12 @@ public class ClassicGameOrganizer implements GameOrganizer {
 
     @Override
     public GameOrganizer copy() {
-        return new ClassicGameOrganizer(gameData.copy(),this.gameMover,turnHandler.nextTurn(),this.gameOverCondition);
+        return new ClassicGameOrganizer(gameData.copy(),this.gameMover,getTurnHandler(),this.gameOverCondition);
     }
 
     @Override
     public Result<?,?> move(Movement movement, GameData gameData){
-        Color playerColor=turnHandler.getCurrentTurn();
+        Color playerColor=gameData.currentTurn();
         if (!existsPiece(movement, gameData)){
             return new InvalidMoveResult(true,"There is no piece in that position.");}
         Result<Boolean,Color> isWinner= isGameOver(movement);
@@ -120,8 +120,11 @@ public class ClassicGameOrganizer implements GameOrganizer {
 
     @NotNull
     private MoveResult<GameOrganizer, String> getResultOfLegitMove(Result<GameData, String> gameResult) {
+        Color playerTurn=getTurnHandler().nextTurn(gameResult.key().copy());
+        GameData gameAfterMove= new ClassicGameData(gameResult.key().getPlayers(),
+                gameResult.key().getBoard().copy(),playerTurn);
         return new MoveResult<>(new
-                ClassicGameOrganizer(gameResult.key(), gameMover, turnHandler.nextTurn(), this.gameOverCondition), Optional.empty());
+                ClassicGameOrganizer(gameAfterMove, gameMover, getTurnHandler() , this.gameOverCondition), Optional.empty());
     }
 
     private boolean isLegitMove(Result<GameData, String> gameResult) {

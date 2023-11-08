@@ -1,6 +1,7 @@
 package common.engine;
 
 import checkers.game.CheckersGameOrganizerFactory;
+import chess.game.GameOrganizerFactory;
 import common.adapter.Adapter;
 import common.result.InvalidMoveResult;
 import edu.austral.dissis.chess.gui.*;
@@ -34,7 +35,7 @@ public class DefaultGameEngine implements GameEngine {
             previousGameOrganizers.pop();
             previousGameOrganizers.push(newGameOrganizer);
             return new NewGameState(Adapter.getCurrentPieces(newGameOrganizer.currentGame().getBoard())
-                    ,Adapter.getCurrentTurn(newGameOrganizer.getTurnHandler()));
+                    ,Adapter.getCurrentTurn(newGameOrganizer.currentGame().currentTurn()));
     }
 
     @NotNull
@@ -47,7 +48,7 @@ public class DefaultGameEngine implements GameEngine {
     private InitialState createInitialState() {
         return new InitialState(Adapter.getBoardSize(gameOrganizer.currentGame().getBoard()),
                 Adapter.getCurrentPieces(gameOrganizer.currentGame().getBoard()),
-                Adapter.getCurrentTurn(gameOrganizer.getTurnHandler()));
+                Adapter.getCurrentTurn(gameOrganizer.currentGame().currentTurn()));
     }
 
 }

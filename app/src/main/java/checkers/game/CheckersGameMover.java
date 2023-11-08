@@ -24,7 +24,7 @@ public class CheckersGameMover implements GameMover {
         if (success.isPresent() && success.get()){
             Board resultBoard=result.key().copy();
             resultBoard.getHistory().add(result.key().getPieces());
-            return new MoveResult<>(new ClassicGameData(gameData.getPlayers(),resultBoard),Optional.empty());
+            return new MoveResult<>(new ClassicGameData(gameData.getPlayers(),resultBoard,gameData.currentTurn()),Optional.empty());
         }
         return new MoveResult<>(gameData.copy(), Optional.of("Invalid Movement"));
     }
