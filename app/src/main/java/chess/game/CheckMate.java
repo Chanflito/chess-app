@@ -1,5 +1,6 @@
 package chess.game;
 
+import chess.validator.CheckValidator;
 import common.game.ClassicGameState;
 import common.game.Position;
 import common.board.interfaces.Board;
@@ -7,6 +8,7 @@ import common.game.interfaces.GameState;
 import common.game.interfaces.GameOverCondition;
 import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
+import common.result.MoveResult;
 import org.jetbrains.annotations.Nullable;
 import common.move.Movement;
 import common.game.Piece;
@@ -16,7 +18,7 @@ import common.result.WinResult;
 import java.util.*;
 
 
-public class ClassicWinCondition implements GameOverCondition {
+public class CheckMate implements GameOverCondition {
 
     //Si ninguna puede realizar movimientos, es porque estan en jaque , y si ninguna puede zafar del jaque, se termina la partida.
 
@@ -60,7 +62,11 @@ public class ClassicWinCondition implements GameOverCondition {
     }
 
     private Result<Board, Boolean> checkMovementsOfEnemy(Board currentBoard, Movement move, Piece piece) {
-        return piece.getMoveHandler().handleMove(move,currentBoard);
+        CheckValidator checkValidator=new CheckValidator();
+        if (!checkValidator.isValid(move,currentBoard)){
+            return piece.getMoveHandler().handleMove(move,currentBoard);
+        }
+        return new MoveResult<>(currentBoard,Optional.of(false));
     }
 
     private boolean checkIfOwnMovementIsValid(GameOrganizer gameOrganizer, Movement movementOfCurrentPlayer, GameState gameState) {

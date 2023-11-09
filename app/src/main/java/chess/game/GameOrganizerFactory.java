@@ -15,14 +15,14 @@ public class GameOrganizerFactory {
     public static GameOrganizer createClassicGame(){
         BoardBuilder boardBuilder=new ClassicBoardBuilder();
         return new ClassicGameOrganizer(new ClassicGameState(List.of(new Player(Color.WHITE), new Player(Color.BLACK)),
-                boardBuilder.boardSize(8,8).build(),Color.WHITE), new ClassicGameMover(),
-                new ClassicTurnStrategy(), new ClassicWinCondition());}
+                boardBuilder.boardSize(8,8).build(),Color.WHITE), new ChessGameMover(),
+                new ClassicTurnStrategy(), new CheckMate());}
 
     public static GameOrganizer createCustomGame(){
         BoardBuilder boardBuilder=new CustomBoardBuilder();
         return new ClassicGameOrganizer(new ClassicGameState(List.of(new Player(Color.WHITE), new Player(Color.BLACK)),
-                boardBuilder.boardSize(8,8).build(),Color.WHITE), new ClassicGameMover(),
-                new ClassicTurnStrategy(), new ClassicWinCondition());}
+                boardBuilder.boardSize(8,8).build(),Color.WHITE), new ChessGameMover(),
+                new ClassicTurnStrategy(), new CheckMate());}
     }
 
 

@@ -1,6 +1,5 @@
 package common.engine;
 
-import checkers.game.CheckersGameOrganizerFactory;
 import chess.game.GameOrganizerFactory;
 import common.adapter.Adapter;
 import common.result.InvalidMoveResult;

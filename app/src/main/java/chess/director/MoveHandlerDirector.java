@@ -114,7 +114,6 @@ public class MoveHandlerDirector {
                 new IncrementValidator(2)
                 ,new PawnCaptureValidator(false),new QuantityMovementValidator(0))));
         andValidator.add(new InBoardValidator());
-        andValidator.add(new CheckValidator());
     }
 
     private void setRooksValidator(List<MovementValidator> orValidator, List<MovementValidator> andValidator){
@@ -280,7 +279,6 @@ public class MoveHandlerDirector {
 
     private static void addDefaultAndValidator(List<MovementValidator> andValidator){
         andValidator.add(new InBoardValidator());
-        andValidator.add(new CheckValidator());
     }
 
     private List<Direction> getPawnDirections(Color color){
