@@ -2,16 +2,17 @@ package common.adapter;
 
 import common.game.Position;
 import common.board.interfaces.Board;
-import edu.austral.dissis.chess.gui.BoardSize;
-import edu.austral.dissis.chess.gui.ChessPiece;
-import edu.austral.dissis.chess.gui.Move;
-import edu.austral.dissis.chess.gui.PlayerColor;
+import common.game.interfaces.GameOrganizer;
+import common.result.InvalidMoveResult;
+import common.result.Result;
+import edu.austral.dissis.chess.gui.*;
 import common.enums.Color;
 import common.move.Movement;
 import common.game.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class Adapter {
     public static List<ChessPiece> getCurrentPieces(Board board){
@@ -49,6 +50,20 @@ public class Adapter {
 
     public static edu.austral.dissis.chess.gui.Position convertPosition(Position position){
         return new edu.austral.dissis.chess.gui.Position(position.y()+1, position.x()+1);
+    }
+
+    public static MoveResult convertResult(Result<?,?> result, Stack<GameOrganizer> previousGameOrganizers){
+        if (result instanceof InvalidMoveResult){
+            return new InvalidMove((String) result.value().get());
+        }
+        if (result instanceof common.result.WinResult){
+            return new GameOver(Adapter.getWinner((Color) result.value().get()));
+        }
+        GameOrganizer newGameOrganizer= (GameOrganizer) result.key();
+        previousGameOrganizers.pop();
+        previousGameOrganizers.push(newGameOrganizer);
+        return new NewGameState(Adapter.getCurrentPieces(newGameOrganizer.currentGame().getBoard())
+                ,Adapter.getCurrentTurn(newGameOrganizer.currentGame().currentTurn()));
     }
 
 }

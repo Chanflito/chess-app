@@ -2,9 +2,7 @@ package common.engine;
 
 import chess.game.GameOrganizerFactory;
 import common.adapter.Adapter;
-import common.result.InvalidMoveResult;
 import edu.austral.dissis.chess.gui.*;
-import common.enums.Color;
 import common.game.interfaces.GameOrganizer;
 import org.jetbrains.annotations.NotNull;
 import common.result.Result;
@@ -22,19 +20,13 @@ public class DefaultGameEngine implements GameEngine {
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-            Result<?,?> tryMovement= previousGameOrganizers.peek().move(Adapter.convertMove(move)
-                    , previousGameOrganizers.peek().currentGame());
-            if (tryMovement instanceof InvalidMoveResult){
-                return new InvalidMove((String) tryMovement.value().get());
-            }
-            if (tryMovement instanceof common.result.WinResult){
-                return new GameOver(Adapter.getWinner((Color) tryMovement.value().get()));
-            }
-            GameOrganizer newGameOrganizer= (GameOrganizer) tryMovement.key();
-            previousGameOrganizers.pop();
-            previousGameOrganizers.push(newGameOrganizer);
-            return new NewGameState(Adapter.getCurrentPieces(newGameOrganizer.currentGame().getBoard())
-                    ,Adapter.getCurrentTurn(newGameOrganizer.currentGame().currentTurn()));
+        Result<?, ?> tryMovement = makeMovement(move);
+        return Adapter.convertResult(tryMovement,previousGameOrganizers);
+    }
+
+    private Result<?, ?> makeMovement(@NotNull Move move) {
+        return previousGameOrganizers.peek().move(Adapter.convertMove(move)
+                , previousGameOrganizers.peek().currentGame());
     }
 
     @NotNull

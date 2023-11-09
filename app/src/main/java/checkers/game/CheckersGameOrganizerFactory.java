@@ -4,6 +4,10 @@ package checkers.game;
 import checkers.board.CheckersBoardBuilder;
 import checkers.helper.TurnHelper;
 import chess.game.ClassicGameOrganizer;
+import common.validator.game.AndGameRule;
+import common.validator.game.EmptySquareRule;
+import common.validator.game.TurnRule;
+import common.validator.interfaces.GameRule;
 import common.wincondition.AllEnemyPiecesCaptureCondition;
 
 import common.game.ClassicGameState;
@@ -21,6 +25,12 @@ public class CheckersGameOrganizerFactory {
                 boardBuilder.boardSize(8,8).build(),Color.WHITE),
                 new CheckersGameMover(),
                 new CheckersTurnStrategy(new TurnHelper()),
-                new AllEnemyPiecesCaptureCondition());}
+                new AllEnemyPiecesCaptureCondition(),
+                normalRules());
+        }
+
+    private static GameRule normalRules(){
+        return new AndGameRule(List.of(new EmptySquareRule(), new TurnRule()));
+    }
 }
 

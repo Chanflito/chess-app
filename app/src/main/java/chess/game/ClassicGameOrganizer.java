@@ -2,14 +2,13 @@ package chess.game;
 
 import common.enums.Color;
 import common.game.ClassicGameState;
-import common.game.Player;
 import common.game.interfaces.*;
 import common.move.Movement;
-import common.game.Piece;
 import common.result.InvalidMoveResult;
 import common.result.MoveResult;
 import common.result.Result;
 import common.result.WinResult;
+import common.validator.interfaces.GameRule;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -17,19 +16,23 @@ import java.util.Optional;
 public class ClassicGameOrganizer implements GameOrganizer {
 
     private final GameState gameState;
-
     private final GameMover gameMover;
 
     private final TurnStrategy turnStrategy;
 
     private final GameOverCondition gameOverCondition;
 
-    public ClassicGameOrganizer(GameState gameState, GameMover gameMover, TurnStrategy turnStrategy, GameOverCondition gameOverCondition) {
+    private final GameRule gameRule;
+
+    public ClassicGameOrganizer(GameState gameState, GameMover gameMover, TurnStrategy turnStrategy,
+                                GameOverCondition gameOverCondition, GameRule gameRule) {
         this.gameState = gameState;
         this.gameMover = gameMover;
         this.turnStrategy = turnStrategy;
         this.gameOverCondition = gameOverCondition;
+        this.gameRule = gameRule;
     }
+
 
     @Override
     public GameState currentGame() {
@@ -54,54 +57,39 @@ public class ClassicGameOrganizer implements GameOrganizer {
 
     @Override
     public GameOrganizer copy() {
-        return new ClassicGameOrganizer(gameState.copy(),this.gameMover,getTurnHandler(),this.gameOverCondition);
+        return new ClassicGameOrganizer(gameState.copy(),this.gameMover,getTurnHandler(),this.gameOverCondition,this.gameRule);
     }
 
     @Override
     public Result<?,?> move(Movement movement, GameState gameState){
-        Color playerColor= gameState.currentTurn();
-        if (!existsPiece(movement, gameState)){
-            return new InvalidMoveResult(true,"There is no piece in that position.");}
+        if (!isValidGameRule(movement, gameState)){
+            return new InvalidMoveResult(true, getMessage(movement, gameState));
+        }
         Result<Boolean,Color> isWinner= isGameOver(movement);
         if (isWinner.key()){
             return new WinResult(true, isWinner.value().get());
         }
-        MoveResult<GameOrganizer,String> moveResult= checkConditions(movement, gameState, playerColor);
+        MoveResult<GameOrganizer,String> moveResult= evaluateMovement(movement, gameState);
         if (moveResult.value().isPresent()){
             return new InvalidMoveResult(true, moveResult.value().get());
         }
         return new MoveResult<>(moveResult.key(), Optional.empty());
     }
 
-
-    private boolean isPlayerColorEqualsPieceColor(Movement movement, GameState gameState, Color playerColor) {
-        return findPiece(movement, gameState).getColor() == playerColor;
+    private Boolean isValidGameRule(Movement movement, GameState gameState) {
+        return gameRule.isValid(movement, gameState).key();
     }
+
+    @NotNull
+    private String getMessage(Movement movement, GameState gameState) {
+        return gameRule.isValid(movement, gameState).value().get();
+    }
+
+
     private Result<GameState, String> makeMovement(Movement movement, GameState currentGameState) {
         return this.getGameMover().movePiece(movement, currentGameState);
     }
 
-    private Boolean existsPiece(Movement movement, GameState gameState) {
-        return gameState.getBoard().getPieces().containsKey(movement.getFrom());
-    }
-
-    private Piece findPiece(Movement movement, GameState gameState) {
-        return gameState.getBoard().getPieces().get(movement.getFrom());
-    }
-
-    @NotNull
-    private MoveResult<GameOrganizer, String> checkConditions(Movement movement, GameState gameState, Color playerColor) {
-        for (Player p: gameState.getPlayers()) {
-            if (p.getColor().compareTo(playerColor)==0){
-                if (isPlayerColorEqualsPieceColor(movement, gameState, playerColor)){
-                    return evaluateMovement(movement, gameState);
-
-                }
-                return new MoveResult<>(this, Optional.of("It's turn of " + playerColor + " player."));
-            }
-        }
-        return new MoveResult<>(this, Optional.of("Player with color " + playerColor + " doesn't exists."));
-    }
 
     @NotNull
     private MoveResult<GameOrganizer, String> evaluateMovement(Movement movement, GameState gameState) {
@@ -114,7 +102,7 @@ public class ClassicGameOrganizer implements GameOrganizer {
 
     @NotNull
     private MoveResult<GameOrganizer, String> getResultOfNotLegitMove(Result<GameState, String> gameResult) {
-        return new MoveResult<>(new ClassicGameOrganizer(gameResult.key(), gameMover, turnStrategy, this.gameOverCondition)
+        return new MoveResult<>(new ClassicGameOrganizer(gameResult.key(), gameMover, turnStrategy, this.gameOverCondition, this.gameRule)
                 , Optional.of(gameResult.value().get()));
     }
 
@@ -124,7 +112,7 @@ public class ClassicGameOrganizer implements GameOrganizer {
         GameState gameAfterMove= new ClassicGameState(gameResult.key().getPlayers(),
                 gameResult.key().getBoard().copy(),playerTurn);
         return new MoveResult<>(new
-                ClassicGameOrganizer(gameAfterMove, gameMover, getTurnHandler() , this.gameOverCondition), Optional.empty());
+                ClassicGameOrganizer(gameAfterMove, gameMover, getTurnHandler() , this.gameOverCondition,this.gameRule), Optional.empty());
     }
 
     private boolean isLegitMove(Result<GameState, String> gameResult) {
