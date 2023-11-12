@@ -5,11 +5,11 @@ import common.move.Movement;
 import common.game.Piece;
 import common.validator.interfaces.MovementValidator;
 
-public class CaptureValidator implements MovementValidator {
+public class EatInClickedPosition implements MovementValidator {
 
     private final boolean isCaptureEnabled;
 
-    public CaptureValidator(boolean isCaptureEnabled) {
+    public EatInClickedPosition(boolean isCaptureEnabled) {
         this.isCaptureEnabled = isCaptureEnabled;
     }
 

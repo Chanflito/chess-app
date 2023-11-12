@@ -1,5 +1,6 @@
 package common.engine;
 
+import checkers.game.CheckersGameOrganizerFactory;
 import chess.game.GameOrganizerFactory;
 import common.adapter.Adapter;
 import edu.austral.dissis.chess.gui.*;
@@ -13,7 +14,7 @@ public class DefaultGameEngine implements GameEngine {
     private final GameOrganizer gameOrganizer;
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
-        this.gameOrganizer = GameOrganizerFactory.createClassicGame();
+        this.gameOrganizer = CheckersGameOrganizerFactory.createCheckersGame();
         previousGameOrganizers.push(gameOrganizer);
     }
 

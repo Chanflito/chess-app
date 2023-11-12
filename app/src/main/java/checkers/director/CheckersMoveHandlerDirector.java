@@ -58,10 +58,10 @@ public class CheckersMoveHandlerDirector {
         List<Direction> directions=getPawnDirections(color);
         orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(0)),new PathValidator(directions.get(0)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new EatInClickedPosition(false),new IncrementValidator(1)))));
         orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(1)),new PathValidator(directions.get(1)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new EatInClickedPosition(false),new IncrementValidator(1)))));
         addDefaultAndValidator(andValidator);
     }
 
@@ -70,22 +70,22 @@ public class CheckersMoveHandlerDirector {
         List<Direction> directions=getQueenDirections();
         orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(0)),new PathValidator(directions.get(0)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new EatInClickedPosition(false),new IncrementValidator(1)))));
         orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(1)),new PathValidator(directions.get(1)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new EatInClickedPosition(false),new IncrementValidator(1)))));
         orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(2)),new PathValidator(directions.get(2)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new EatInClickedPosition(false),new IncrementValidator(1)))));
         orValidator.add(new CompositeXorValidator(new PieceCountValidator(),new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(3)),new PathValidator(directions.get(3)),
-                        new CaptureValidator(false),new IncrementValidator(1)))));
+                        new EatInClickedPosition(false),new IncrementValidator(1)))));
         addDefaultAndValidator(andValidator);
     }
     private CaptureMover createContinuousCaptureMover(){
         List<Position> directions=getAllDirectionsToCapture();
         return new CaptureMover(List.of(new CompositeAndValidator(List.of(new CanCaptureValidator(directions),
-                new PreviousCaptureValidator(),new CaptureValidator(false)))));
+                new PreviousCaptureValidator(),new EatInClickedPosition(false)))));
     }
 
     private CaptureMover createFirstCaptureMover( List<Position> directions){
@@ -145,19 +145,18 @@ public class CheckersMoveHandlerDirector {
         List<Direction> directions=getPawnDirections(color);
         rules.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(0)),new PathValidator(directions.get(0)),
-                        new CaptureValidator(false),new IncrementValidator(1))));
+                        new EatInClickedPosition(false),new IncrementValidator(1))));
         rules.add(new CompositeAndValidator(
                 List.of(new UnidirectionalMovementValidator(directions.get(1)),new PathValidator(directions.get(1)),
-                        new CaptureValidator(false),new IncrementValidator(1))));
+                        new EatInClickedPosition(false),new IncrementValidator(1))));
         rules.add((new CompositeAndValidator(List.of(new UnidirectionalMovementValidator(directions.get(0)),
-                new CaptureValidator(false), new IncrementValidator(2),
+                new EatInClickedPosition(false), new IncrementValidator(2),
                 new CanCaptureValidator(getPawnsDirectionToCapture(color)),
                 new PreviousCaptureValidator()))));
         rules.add((new CompositeAndValidator(List.of(new UnidirectionalMovementValidator(directions.get(1)),
-                new CaptureValidator(false), new IncrementValidator(2),
+                new EatInClickedPosition(false), new IncrementValidator(2),
                 new CanCaptureValidator(getPawnsDirectionToCapture(color)),
                 new PreviousCaptureValidator()))));
-        rules.add(new CompositeXorValidator(new PreviousCaptureValidator(),new CanCaptureValidator(getPawnsDirectionToCapture(color))));
         rules.add(new CompositeXorValidator(new PreviousCaptureValidator(),new CanCaptureValidator(getPawnsDirectionToCapture(color))));
         return new CompositeAndValidator(List.of((new CompositeOrValidator(rules))));
     }
