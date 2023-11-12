@@ -14,7 +14,7 @@ public class DefaultGameEngine implements GameEngine {
     private final GameOrganizer gameOrganizer;
     private final Stack<GameOrganizer> previousGameOrganizers =new Stack<>();
     public DefaultGameEngine() {
-        this.gameOrganizer = CheckersGameOrganizerFactory.createCheckersGame();
+        this.gameOrganizer = GameOrganizerFactory.createClassicGame();
         previousGameOrganizers.push(gameOrganizer);
     }
 

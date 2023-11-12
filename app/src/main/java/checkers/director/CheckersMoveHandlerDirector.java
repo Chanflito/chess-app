@@ -2,7 +2,7 @@ package checkers.director;
 
 
 import checkers.mover.CaptureMover;
-import checkers.validator.CanCaptureValidator;
+import checkers.validator.EatJumpingPieceValidator;
 import common.mover.CaptureAndPromoteMover;
 import common.validator.validators.PieceCountValidator;
 import checkers.validator.PreviousCaptureValidator;
@@ -84,13 +84,13 @@ public class CheckersMoveHandlerDirector {
     }
     private CaptureMover createContinuousCaptureMover(){
         List<Position> directions=getAllDirectionsToCapture();
-        return new CaptureMover(List.of(new CompositeAndValidator(List.of(new CanCaptureValidator(directions),
+        return new CaptureMover(List.of(new CompositeAndValidator(List.of(new EatJumpingPieceValidator(directions),
                 new PreviousCaptureValidator(),new EatInClickedPosition(false)))));
     }
 
     private CaptureMover createFirstCaptureMover( List<Position> directions){
         return new CaptureMover(List.of(new CompositeXorValidator(new PreviousCaptureValidator(),
-                new CanCaptureValidator(directions))));
+                new EatJumpingPieceValidator(directions))));
     }
 
     private List<Direction> getPawnDirections(Color color){
@@ -151,13 +151,13 @@ public class CheckersMoveHandlerDirector {
                         new EatInClickedPosition(false),new IncrementValidator(1))));
         rules.add((new CompositeAndValidator(List.of(new UnidirectionalMovementValidator(directions.get(0)),
                 new EatInClickedPosition(false), new IncrementValidator(2),
-                new CanCaptureValidator(getPawnsDirectionToCapture(color)),
+                new EatJumpingPieceValidator(getPawnsDirectionToCapture(color)),
                 new PreviousCaptureValidator()))));
         rules.add((new CompositeAndValidator(List.of(new UnidirectionalMovementValidator(directions.get(1)),
                 new EatInClickedPosition(false), new IncrementValidator(2),
-                new CanCaptureValidator(getPawnsDirectionToCapture(color)),
+                new EatJumpingPieceValidator(getPawnsDirectionToCapture(color)),
                 new PreviousCaptureValidator()))));
-        rules.add(new CompositeXorValidator(new PreviousCaptureValidator(),new CanCaptureValidator(getPawnsDirectionToCapture(color))));
+        rules.add(new CompositeXorValidator(new PreviousCaptureValidator(),new EatJumpingPieceValidator(getPawnsDirectionToCapture(color))));
         return new CompositeAndValidator(List.of((new CompositeOrValidator(rules))));
     }
 }

@@ -8,10 +8,10 @@ import common.validator.interfaces.MovementValidator;
 
 import java.util.List;
 
-public class CanCaptureValidator implements MovementValidator {
+public class EatJumpingPieceValidator implements MovementValidator {
     private final List<Position> directionsToCapture;
 
-    public CanCaptureValidator(List<Position> directionsToCapture) {
+    public EatJumpingPieceValidator(List<Position> directionsToCapture) {
         this.directionsToCapture = directionsToCapture;
     }
 
